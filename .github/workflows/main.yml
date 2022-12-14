@@ -1,6 +1,6 @@
 name: package-solution
 
-on: [push]
+on: [workflow_dispatch]
 
 jobs:
   firstJob: 
