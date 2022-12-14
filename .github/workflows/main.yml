@@ -5,6 +5,16 @@ on: [push]
 jobs:
   firstJob: 
     name: step1
-    runs-on: ubunto 
+    runs-on: ubuntu-latest 
     steps:
-      - run: echo No one man should have all that Power
+      - name: Test console
+        run: "echo No one man should have all that Power (Apps)!"
+      
+      - name: Pack Solution
+        uses: microsoft/powerplatform-actions/pack-solution@v0
+        with:
+          solution-file: './solution1.zip'
+          solution-folder: 'BcSampleAppSolution'
+          solution-type: 'Unmanaged'
+          overwrite-files: true
+         
