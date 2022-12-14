@@ -19,5 +19,5 @@ jobs:
           solution-file: './solution1.zip'
           solution-folder: 'BcSampleAppSolution'
           solution-type: 'Unmanaged'
-          overwrite-files: true
+          process-canvas-apps: true
          
