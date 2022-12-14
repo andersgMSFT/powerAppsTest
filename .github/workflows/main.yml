@@ -1,0 +1,10 @@
+name: package-solution
+
+on: [push]
+
+jobs:
+  firstJob: 
+    name: step1
+    runs-on: ubunto 
+    steps:
+      - run: echo No one man should have all that Power
