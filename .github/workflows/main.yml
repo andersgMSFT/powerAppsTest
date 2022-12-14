@@ -14,7 +14,7 @@ jobs:
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
           solution-file: './solution1.zip'
-          solution-folder: './BcSampleAppSolution'
+          solution-folder: '../BcSampleAppSolution'
           solution-type: 'Unmanaged'
           overwrite-files: true
          
