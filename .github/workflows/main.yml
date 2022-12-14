@@ -16,8 +16,13 @@ jobs:
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
-          solution-file: './solution1.zip'
+          solution-file: 'output/BcSampleAppSolution.zip'
           solution-folder: 'BcSampleAppSolution'
           solution-type: 'Unmanaged'
           process-canvas-apps: true
          
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: BcPowerApps
+          path: output
