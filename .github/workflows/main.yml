@@ -11,7 +11,7 @@ jobs:
         run: echo "No one man should have all that Power (Apps)!"
         
       - name: Check out code
-        run: actions/checkout@v2.6.0
+        uses: actions/checkout@v2.6.0
 
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
