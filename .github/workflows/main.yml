@@ -1,0 +1,20 @@
+#Official build
+name: 1.0.$(Year:yy)$(DayOfYear).$(Rev:r) # This is the build number
+
+trigger:
+  - master
+  - releases/*
+
+pool:
+  vmImage: "windows-2019"
+
+steps:
+- name: powerplatform-actions
+  uses: microsoft/powerplatform-actions@v0.10.1
+  with:
+    # URL of Power Platform environment to connect with; e.g. "https://test-env.crm.dynamics.com"
+    environment-url: # optional
+    # Power Platform user name to authenticate with, e.g. myname@my-org.onmicrosoft.com. Setting this input makes user-name and password required; specifying alternate "app-id" credential set of inputs will result in an error.
+    user-name: # optional
+    # Power Platform password, required if authenticating with username. Do NOT checkin password, instead create a secret and reference it here with: see: https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets#using-encrypted-secrets-in-a-workflow
+    password-secret: # optional
