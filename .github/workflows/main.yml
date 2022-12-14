@@ -1,5 +1,4 @@
-#Official build
-name: 1.0.$(Year:yy)$(DayOfYear).$(Rev:r) # This is the build number
+name: Package solution 
 
 trigger:
   - master
