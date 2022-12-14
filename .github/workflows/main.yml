@@ -1,15 +1,18 @@
 name: package-solution
 
-on: [workflow_dispatch]
+on: [push]
 
 jobs:
-  firstJob: 
-    name: step 1
+  package-solution: 
+    name: Package Solution
     runs-on: ubuntu-latest 
     steps:
       - name: Test console
         run: echo "No one man should have all that Power (Apps)!"
         
+      - name: Check out code
+        run: actions/checkout@v2
+
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
