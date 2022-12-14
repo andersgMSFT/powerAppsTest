@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest 
     steps:
       - name: Test console
-        run: echo No one man should have all that Power (Apps)!
+        run: "echo No one man should have all that Power (Apps)!"
       
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
