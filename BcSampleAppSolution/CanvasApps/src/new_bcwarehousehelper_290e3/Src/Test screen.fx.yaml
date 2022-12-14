@@ -1,0 +1,39 @@
+"'Test screen' As screen":
+
+    "Gallery2 As gallery.'BrowseLayout_Horizontal_TwoTextOneImageOverlayVariant_ver4.0'":
+        Height: =100
+        Items: |-
+            =[{icon: Icon.Bell, name: "Scan", index: 0}, {icon: Icon.Bell, name: "Scan", index: 1}]
+        TemplatePadding: =0
+        Y: =80
+        ZIndex: =1
+
+        Icon4 As icon.AddUser:
+            Icon: =ThisItem.Value.icon
+            OnSelect: =Select(Parent)
+            X: =140
+            Y: =5
+            ZIndex: =4
+
+        Label3 As label:
+            Height: =31
+            OnSelect: =Select(Parent)
+            Size: =21
+            Text: =ThisItem.Value.name
+            Width: =77
+            X: =140
+            Y: =69
+            ZIndex: =5
+
+        figSeperator As rectangle:
+            OnSelect: =Select(Parent)
+            Width: =0
+            X: =310
+            ZIndex: =6
+
+    Icon3 As icon.Bell:
+        Icon: =Icon.DetailList
+        X: =297
+        Y: =832
+        ZIndex: =2
+

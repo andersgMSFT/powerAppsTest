@@ -1,0 +1,37 @@
+"'566495f8-7ef6-473b-bca1-b539b41b7ee5' As TestSuite":
+    Description: =""
+    DisplayName: ="Suite"
+
+    "'a3104c73-1fdc-4f47-acd1-bcffd25a53f9' As TestCase":
+        Description: ="First test"
+        DisplayName: ="Case"
+
+        Step1 As TestStep:
+            Description: |-
+                ="Indstil 'warehouse_Dropdown'.Selected til {'Value':""Magazijn Oost""}"
+            Screen: =Start Page
+            Value: |-
+                =SetProperty(warehouse_Dropdown.Selected, {Value:"Magazijn Oost"})
+
+        Step2 As TestStep:
+            Description: ="Vælg 'start_button'"
+            Screen: =Start Page
+            Value: =Select(start_button)
+
+        Step3 As TestStep:
+            Description: |-
+                ="Indstil 'webonly_dropdown'.Selected til {'Value':""1900-S""}"
+            Screen: =Scan Page
+            Value: |-
+                =SetProperty(webonly_dropdown.Selected, {Value:"1900-S"})
+
+        Step4 As TestStep:
+            Description: ="Vælg 'Icon2'"
+            Screen: =Scan Page
+            Value: =Select(icnMinut)
+
+        Step5 As TestStep:
+            Description: ="Vælg 'submitForm_button'"
+            Screen: =Scan Page
+            Value: =Select(btnSubmitItem)
+

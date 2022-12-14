@@ -1,0 +1,54 @@
+{
+  "d12d2ff4-7368-496c-b006-e50fd64afc64": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Office 365 Users",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1593/1.0.1593.2980/office365users/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_office365users",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [
+      "Office365-brugere"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "d12d2ff4-7368-496c-b006-e50fd64afc64"
+  },
+  "db53e06c-0d5d-4540-a126-3218ac51e136": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Premium",
+      "displayName": "Dynamics 365 Business Central",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1602/1.0.1602.3056/dynamicssmbsaas/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_dynamicssmbsaas",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {
+      "PRODUCTION,84b7b4b7-135b-ed11-956e-000d3a398f21": {
+        "dataSources": {
+          "items (v2.0)": {
+            "tableName": "items,v2.0"
+          },
+          "locations (v2.0)": {
+            "tableName": "locations,v2.0"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "locations (v2.0)",
+      "items (v2.0)"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "db53e06c-0d5d-4540-a126-3218ac51e136"
+  }
+}
