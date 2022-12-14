@@ -8,3 +8,7 @@ jobs:
     runs-on: ubuntu-latest 
     steps:
       - run: echo "No one man should have all that Power!!"
+      
+      - name: powerplatform-actions
+        uses: microsoft/powerplatform-actions@v0.10.1
+         
