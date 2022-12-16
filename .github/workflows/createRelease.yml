@@ -19,12 +19,22 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Analyze Artifacts
+        id: analyzeartifacts
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          $ErrorActionPreference = "STOP"
+          Set-StrictMode -version 2.0
+          
+          $include = @()
+          $sha = ''
+          $allArtifacts = @()
+          $page = 1
+          $headers = @{ 
+            "Authorization" = "token ${{ github.token }}"
+            "Accept"        = "application/json"
+          }
+          
+          $repoArtifacts = Invoke-WebRequest -UseBasicParsing -Headers $headers -Uri "$($ENV:GITHUB_API_URL)/repos/$($ENV:GITHUB_REPOSITORY)/actions/artifacts?per_page=100&page=$page" | ConvertFrom-Json
+          
+          Write-Host "Repo Artifacts count: $($repoArtifacts.total_count)"
+          Write-Host "Downloaded Artifacts count: $($allArtifacts.Count)"
