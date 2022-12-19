@@ -16,7 +16,7 @@ jobs:
       - name: Update solution version
         shell: pwsh
         run: |
-          script/updateSolutionVersion.ps1 -solutionPath BcSampleAppSolution -version "1.0.1.0"
+          script/updateSolutionVersion.ps1 -solutionPath BcSampleAppSolution/Other/Solution.xml -version "1.0.1.0"
 
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
