@@ -34,3 +34,20 @@ jobs:
           user-name: ${{ secrets.PowerUser }}
           password-secret: ${{ secrets.PowerPassword }}
           environment-url: ${{ secrets.PowerEnv }}
+          
+          
+      - name: Export solution as unmanaged
+        uses: microsoft/powerplatform-actions/export-solution@v0
+        with:
+          environment-url: ${{secrets.powerenv}}
+          user-name: ${{secrets..PowerUSERNAME}}
+          password-secret: ${{ secrets.powerpassword }}
+          solution-name: BcSampleAppSolution
+          managed: false
+          solution-output-file: output/BcSampleAppSolution.zip
+
+      - name: Upload the ready to ship solution to GH artifact store
+        uses: actions/upload-artifact@v2
+        with:
+          name: BcSampleAppSolution
+          path: output/BcSampleAppSolution.zip
