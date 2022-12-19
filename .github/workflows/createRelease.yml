@@ -10,7 +10,7 @@ on:
       tag:
         description: Tag of this release (needs to be semantic version string https://semver.org, ex. 1.0.0)
         required: true
-        default: "1.0.0.2"
+        default: "1.1.2"
 
 env:
   bcPowerAppsName: BcSampleAppSolution
