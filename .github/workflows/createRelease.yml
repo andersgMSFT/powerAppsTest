@@ -7,6 +7,11 @@ on:
         description: Tag of this release (needs to be semantic version string https://semver.org, ex. 1.0.0)
         required: true
         default: "1.1.2"
+      draft:
+        description: Is this a draft release?
+        required: true
+        type: boolean
+        default: false
 
 env:
   bcPowerAppsName: BcSampleAppSolution
@@ -55,7 +60,7 @@ jobs:
         with:
           tag_name: ${{ github.event.inputs.version }}
           release_name: Release (${{ github.event.inputs.version }})
-          draft: true
+          draft: ${{ github.event.inputs.draft }}
           prerelease: false
 
       - uses: actions/download-artifact@master
