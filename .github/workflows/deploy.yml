@@ -30,7 +30,5 @@ jobs:
       - name: Who am I 
         uses: microsoft/powerplatform-actions/who-am-i@v0
         with:
-          # Power Platform user name to authenticate with, e.g. myname@my-org.onmicrosoft.com. Setting this input makes user-name and password required; specifying alternate "app-id" credential set of inputs will result in an error.
           user-name: ${{ secrets.PowerUser }}
-          # Power Platform password, required if authenticating with username. Do NOT checkin password, instead create a secret and reference it here with: see: https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets#using-encrypted-secrets-in-a-workflow
           password-secret: ${{ secrets.PowerPassword }}
