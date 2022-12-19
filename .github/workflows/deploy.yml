@@ -36,7 +36,7 @@ jobs:
           environment-url: ${{ secrets.PowerEnv }}
           
           
-      - name: Export solution as unmanaged
+      - name: Publish solution to Power Platform
         uses: microsoft/powerplatform-actions/import-solution@v0
         with:
           user-name: ${{ secrets.PowerUser }}
@@ -48,7 +48,7 @@ jobs:
           force-overwrite: true
           publish-changes: true
 
-      - name: Upload the ready to ship solution to GH artifact store
+      - name: Upload solution to GH artifact store
         uses: actions/upload-artifact@v2
         with:
           name: BcSampleAppSolution
