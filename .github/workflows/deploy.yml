@@ -44,7 +44,9 @@ jobs:
           environment-url: ${{ secrets.PowerEnv }}
           solution-name: BcSampleAppSolution
           managed: false
-          solution-output-file: output/BcSampleAppSolution.zip
+          solution-file: output/BcSampleAppSolution.zip
+          force-overwrite: true
+          publish-changes: true
 
       - name: Upload the ready to ship solution to GH artifact store
         uses: actions/upload-artifact@v2
