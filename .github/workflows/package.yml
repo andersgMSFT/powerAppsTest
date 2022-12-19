@@ -1,20 +1,16 @@
-name: package-solution
-
+name: package
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       solutionPath:
         required: true
-        type: text
-        default: "BcSampleAppSolution"
+        type: string
       solutionName: 
         required: true
-        type: text
-        default: "BcSampleAppSolution"
+        type: string
       solutionVersion: 
         required: true
-        type: text
-        default: "1.0.0.1"
+        type: string
       
 permissions:
   actions: write
