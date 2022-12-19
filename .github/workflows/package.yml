@@ -7,8 +7,8 @@ jobs:
     name: Package Solution
     runs-on: ubuntu-latest 
     steps:
-      - name: Test console
-        run: echo "No one man should have all that Power (Apps)!"
+      - name: Update solution version
+        run: script/updateSolutionVersion.ps1 -solutionPath BcSampleAppSolution -version "1.0.1.0"
         
       - name: Check out code
         uses: actions/checkout@v2.6.0
