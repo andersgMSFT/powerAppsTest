@@ -24,7 +24,7 @@ jobs:
     
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses:  andersgMSFT/powerAppsTest/.github/workflows/package.yml@main
+      - uses: .github/workflows/package.yml@main
         with:
           solutionPath: "BcSampleAppSolution"
           solutionName: "BcSampleAppSolution"
