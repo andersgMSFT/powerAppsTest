@@ -11,11 +11,11 @@ on:
       name:
         description: Name of this release
         required: true
-        default: ""
+        default: "test release"
       tag:
         description: Tag of this release (needs to be semantic version string https://semver.org, ex. 1.0.0)
         required: true
-        default: ""
+        default: "1.0.0.2"
 
 jobs:
   build-and-release:
