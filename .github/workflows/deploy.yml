@@ -35,7 +35,7 @@ jobs:
           process-canvas-apps: true
 
       - name: powerplatform-actions
-        uses: microsoft/powerplatform-actions@v0.10.2
+        uses: microsoft/powerplatform-actions/whoAmI@v0
         with:
           # Power Platform user name to authenticate with, e.g. myname@my-org.onmicrosoft.com. Setting this input makes user-name and password required; specifying alternate "app-id" credential set of inputs will result in an error.
           user-name: ${{ secrets.PowerUser }}
