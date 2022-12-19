@@ -39,9 +39,9 @@ jobs:
       - name: Export solution as unmanaged
         uses: microsoft/powerplatform-actions/export-solution@v0
         with:
-          environment-url: ${{secrets.powerenv}}
-          user-name: ${{secrets.PowerUSERNAME}}
-          password-secret: ${{ secrets.powerpassword }}
+          user-name: ${{ secrets.PowerUser }}
+          password-secret: ${{ secrets.PowerPassword }}
+          environment-url: ${{ secrets.PowerEnv }}
           solution-name: BcSampleAppSolution
           managed: false
           solution-output-file: output/BcSampleAppSolution.zip
