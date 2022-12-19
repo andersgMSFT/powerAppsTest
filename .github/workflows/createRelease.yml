@@ -7,11 +7,11 @@ on:
         description: Tag of this release (needs to be semantic version string https://semver.org, ex. 1.0.0)
         required: true
         default: "1.1.2"
-      publish:
-        description: published release.
+      draft:
+        description: Create as deaft.
         required: true
         type: boolean
-        default: false
+        default: true
 
 env:
   bcPowerAppsName: BcSampleAppSolution
@@ -60,7 +60,7 @@ jobs:
         with:
           tag_name: ${{ github.event.inputs.version }}
           release_name: Release (${{ github.event.inputs.version }})
-          draft: ${{ github.event.inputs.publish }}
+          draft: ${{ github.event.inputs.draft }}
           prerelease: false
 
       - uses: actions/download-artifact@master
