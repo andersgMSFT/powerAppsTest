@@ -1,11 +1,6 @@
-# This is a basic workflow to help you get started with Actions
+name: Build solution and create release
 
-name: Create release
-
-
-# Controls when the workflow will run
 on:
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
       name:
@@ -18,18 +13,41 @@ on:
         default: "1.0.0.2"
 
 jobs:
-  build-and-release:
+  package-solution: 
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: .github/workflows/package.yml@main
-        with:
-          solutionPath: "BcSampleAppSolution"
-          solutionName: "BcSampleAppSolution"
-          solutionVersion: "1.0.0.1"
+    - name: Check out code
+      uses: actions/checkout@v3
+        
+    - name: Update solution version
+      shell: pwsh
+      run: |
+        script/updateSolutionVersion.ps1 -solutionPath ${{ github.event.inputs.solutionPath }}/Other/Solution.xml -version ${{ github.event.inputs.solutionVersion }}
 
+    - name: Pack Solution
+      uses: microsoft/powerplatform-actions/pack-solution@v0
+      with:
+        solution-file: 'output/${{ github.event.inputs.solutionName }}.zip'
+        solution-folder: ${{ github.event.inputs.solutionPath }}
+        solution-type: 'Unmanaged'
+        process-canvas-apps: true
+         
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.1
+      with:
+        name: ${{ github.event.inputs.solutionVersion }}
+        path: output/${{ github.event.inputs.solutionName }}.zip
+
+  release:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    needs: [package-solution]
+    
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
