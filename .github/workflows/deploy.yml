@@ -37,7 +37,7 @@ jobs:
           
           
       - name: Export solution as unmanaged
-        uses: microsoft/powerplatform-actions/export-solution@v0
+        uses: microsoft/powerplatform-actions/import-solution@v0
         with:
           user-name: ${{ secrets.PowerUser }}
           password-secret: ${{ secrets.PowerPassword }}
