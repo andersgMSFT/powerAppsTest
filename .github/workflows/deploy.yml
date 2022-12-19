@@ -33,3 +33,4 @@ jobs:
         with:
           user-name: ${{ secrets.PowerUser }}
           password-secret: ${{ secrets.PowerPassword }}
+          environment-url: ${{ secrets.PowerEnv}}
