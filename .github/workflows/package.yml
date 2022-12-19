@@ -6,9 +6,11 @@ on:
       solutionPath:
         required: true
         type: text
+        default: "BcSampleAppSolution"
       solutionName: 
         required: true
         type: text
+        default: "BcSampleAppSolution"
       
 permissions:
   actions: write
