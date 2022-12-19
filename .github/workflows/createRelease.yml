@@ -2,6 +2,7 @@
 
 name: Create release
 
+
 # Controls when the workflow will run
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -15,25 +16,19 @@ on:
         description: Tag of this release (needs to be semantic version string https://semver.org, ex. 1.0.0)
         required: true
         default: ""
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  build-and-release:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
+    
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-
-      - name: Pack Solution
-        uses: microsoft/powerplatform-actions/pack-solution@v0
+      - uses:  ./.github/workflows/package-solution
         with:
-          solution-file: "output/BcSampleAppSolution.zip"
-          solution-folder: "BcSampleAppSolution"
-          solution-type: "Unmanaged"
-          process-canvas-apps: true
+          solutionPath: "BcSampleAppSolution"
+          solutionName: "BcSampleAppSolution"
+          solutionVersion: "1.0.0.1"
 
       - name: Create Release
         id: create_release
