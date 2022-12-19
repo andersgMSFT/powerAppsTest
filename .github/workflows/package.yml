@@ -1,7 +1,15 @@
 name: package-solution
 
-on: [push]
-
+on:
+  workflow_dispatch:
+    inputs:
+      solutionPath:
+        required: true
+        type: text
+      solutionName: 
+        required: true
+        type: text
+      
 permissions:
   actions: write
 
@@ -11,23 +19,23 @@ jobs:
     runs-on: ubuntu-latest 
     steps:  
       - name: Check out code
-        uses: actions/checkout@v2.6.0
+        uses: actions/checkout@v3
         
       - name: Update solution version
         shell: pwsh
         run: |
-          script/updateSolutionVersion.ps1 -solutionPath BcSampleAppSolution/Other/Solution.xml -version "1.0.1.0"
+          script/updateSolutionVersion.ps1 -solutionPath ${{ github.event.inputs.solutionPath }}/Other/Solution.xml -version "1.0.1.0"
 
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
-          solution-file: 'output/BcSampleAppSolution.zip'
-          solution-folder: 'BcSampleAppSolution'
+          solution-file: 'output/${{ github.event.inputs.solutionName }}.zip'
+          solution-folder: ${{ github.event.inputs.solutionPath }}
           solution-type: 'Unmanaged'
           process-canvas-apps: true
          
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.1
         with:
-          name: BcPowerApps
+          name: ${{ github.event.inputs.solutionName }}
           path: output
