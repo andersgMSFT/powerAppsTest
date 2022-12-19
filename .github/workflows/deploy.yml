@@ -33,4 +33,4 @@ jobs:
         with:
           user-name: ${{ secrets.PowerUser }}
           password-secret: ${{ secrets.PowerPassword }}
-          environment-url: https://crmbc384129.sharepoint.com/
+          environment-url: ${{ secrets.PowerEnv }}
