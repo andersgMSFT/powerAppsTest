@@ -3,11 +3,7 @@ name: Create release
 on:
   workflow_dispatch:
     inputs:
-      name:
-        description: Name of this release
-        required: true
-        default: "test release"
-      tag:
+      version:
         description: Tag of this release (needs to be semantic version string https://semver.org, ex. 1.0.0)
         required: true
         default: "1.1.2"
@@ -28,7 +24,7 @@ jobs:
     - name: Update solution version
       shell: pwsh
       run: |
-        script/updateSolutionVersion.ps1 -solutionPath ${{ env.bcPowerAppsName }}/Other/Solution.xml -version ${{ github.event.inputs.tag }}
+        script/updateSolutionVersion.ps1 -solutionPath ${{ env.bcPowerAppsName }}/Other/Solution.xml -version ${{ github.event.inputs.version }}
 
     - name: Pack Solution
       uses: microsoft/powerplatform-actions/pack-solution@v0
@@ -57,14 +53,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.event.inputs.tag }}
-          release_name: Release ${{ github.event.inputs.name }}
+          tag_name: ${{ github.event.inputs.version }}
+          release_name: Release (${{ github.event.inputs.version }})
           draft: true
           prerelease: false
 
       - uses: actions/download-artifact@master
         with:
-          name: ${{ github.event.inputs.tag }}
+          name: ${{ github.event.inputs.version }}
           path: ./
 
       - name: Upload Release Asset
