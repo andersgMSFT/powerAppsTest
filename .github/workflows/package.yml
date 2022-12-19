@@ -11,6 +11,10 @@ on:
         required: true
         type: text
         default: "BcSampleAppSolution"
+      solutionVersion: 
+        required: true
+        type: text
+        default: "1.0.0.1"
       
 permissions:
   actions: write
@@ -26,7 +30,7 @@ jobs:
       - name: Update solution version
         shell: pwsh
         run: |
-          script/updateSolutionVersion.ps1 -solutionPath ${{ github.event.inputs.solutionPath }}/Other/Solution.xml -version "1.0.1.0"
+          script/updateSolutionVersion.ps1 -solutionPath ${{ github.event.inputs.solutionPath }}/Other/Solution.xml -version ${{ github.event.inputs.solutionVersion }}
 
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
