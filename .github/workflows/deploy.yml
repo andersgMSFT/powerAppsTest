@@ -6,14 +6,7 @@ name: Deploy solution
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-    inputs:
-      appVersion:
-        description: The version to deploy to environment(s) (current, prerelease, draft, latest or version number)
-        required: false
-        default: 'current'
-      environmentName:
-        description: Environment mask to receive the new version (* for all, PROD* for all environments starting with PROD)
-        required: true
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
