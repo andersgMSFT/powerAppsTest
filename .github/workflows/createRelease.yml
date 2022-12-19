@@ -8,7 +8,7 @@ on:
         required: true
         default: "1.1.2"
       publish:
-        description: If not selected, the release will be created as a draft.
+        description: published release.
         required: true
         type: boolean
         default: false
@@ -42,7 +42,7 @@ jobs:
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.1
       with:
-        name: ${{ github.event.inputs.tag }}
+        name: ${{ github.event.inputs.version }}
         path: output/${{ env.bcPowerAppsName }}.zip
 
   create-release:
