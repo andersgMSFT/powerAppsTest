@@ -40,7 +40,7 @@ jobs:
         uses: microsoft/powerplatform-actions/export-solution@v0
         with:
           environment-url: ${{secrets.powerenv}}
-          user-name: ${{secrets..PowerUSERNAME}}
+          user-name: ${{secrets.PowerUSERNAME}}
           password-secret: ${{ secrets.powerpassword }}
           solution-name: BcSampleAppSolution
           managed: false
