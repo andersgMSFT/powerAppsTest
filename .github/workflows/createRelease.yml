@@ -19,22 +19,32 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: Analyze Artifacts
-        id: analyzeartifacts
-        run: |
-          $ErrorActionPreference = "STOP"
-          Set-StrictMode -version 2.0
-          
-          $include = @()
-          $sha = ''
-          $allArtifacts = @()
-          $page = 1
-          $headers = @{ 
-            "Authorization" = "token ${{ github.token }}"
-            "Accept"        = "application/json"
-          }
-          
-          $repoArtifacts = Invoke-WebRequest -UseBasicParsing -Headers $headers -Uri "$($ENV:GITHUB_API_URL)/repos/$($ENV:GITHUB_REPOSITORY)/actions/artifacts?per_page=100&page=$page" | ConvertFrom-Json
-          
-          Write-Host "Repo Artifacts count: $($repoArtifacts.total_count)"
-          Write-Host "Downloaded Artifacts count: $($allArtifacts.Count)"
+      - name: Pack Solution
+        uses: microsoft/powerplatform-actions/pack-solution@v0
+        with:
+          solution-file: "output/BcSampleAppSolution.zip"
+          solution-folder: "BcSampleAppSolution"
+          solution-type: "Unmanaged"
+          process-canvas-apps: true
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: true
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: output/BcSampleAppSolution.zip
+          asset_name: BcSampleAppSolution.zip
+          asset_content_type: application/zip
