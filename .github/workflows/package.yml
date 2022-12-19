@@ -14,7 +14,9 @@ jobs:
         uses: actions/checkout@v2.6.0
         
       - name: Update solution version
-        run: script/updateSolutionVersion.ps1 -solutionPath BcSampleAppSolution -version "1.0.1.0"
+        shell: pwsh
+        run: |
+          script/updateSolutionVersion.ps1 -solutionPath BcSampleAppSolution -version "1.0.1.0"
 
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
