@@ -59,8 +59,6 @@ jobs:
           user-name: ${{ secrets.PowerUser }}
           password-secret: ${{ secrets.PowerPassword }}
           environment-url: ${{ secrets.PowerEnv }}
-          solution-name: ${{ env.bcPowerAppsName }}
-          managed: false
           solution-file: output/${{ env.bcPowerAppsName }}.zip
           force-overwrite: true
           publish-changes: true
