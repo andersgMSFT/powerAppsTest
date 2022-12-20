@@ -48,4 +48,4 @@ jobs:
           overwrite-files: true
           
       - name: Git commit
-        run:   git config user.email "git@example.com"; git config user.name "Workflow"; git add . ; git commit -m "pull latest solution changes"; 
+        run:   git config user.email "git@example.com"; git config user.name "Workflow"; git add . ; git commit -m "pull latest solution changes"; git pull;
