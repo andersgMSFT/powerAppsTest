@@ -19,7 +19,7 @@ if ($xmlFile.Exists) {
 
     if ($dev) {
         $nodeWithName = $xml.SelectSingleNode("//UniqueName");
-        Write-Host "Updating solution name: " + $node.'#text' + "(dev)";
+        Write-Host "Updating solution name: " + $nodeWithName.'#text' + "(dev)";
         $nodeWithName.'#text' = $nodeWithName.'#text' + "(dev)";    
     }
 
