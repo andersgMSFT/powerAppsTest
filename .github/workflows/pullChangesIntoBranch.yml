@@ -46,3 +46,6 @@ jobs:
           solution-folder: ${{ env.solutionName }}
           solution-type: 'Unmanaged'
           overwrite-files: true
+          
+      - name: Git commit
+        run: git add . ; git commit -m "pull latest solution changes";
