@@ -1,4 +1,10 @@
 name: Test run package flow
 
-on: 
-  
+on: [workflow_dispatch]
+
+jobs:
+  runPackage: 
+    runs-on: ubuntu-latest 
+    steps:
+      - name: run action 
+        uses: ../actions/package.yaml@main
