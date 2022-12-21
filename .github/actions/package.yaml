@@ -1,8 +1,12 @@
 name: package-solution
 
-env: 
-  solutionPath: "BcSampleAppsSolution"
-  solutionName: "BcSampleAppsSolution"
+inputs:
+  solutionPath:
+    default: BcSampleAppsSolution
+  solutionPath:
+    default: BcSampleAppsSolution
+  solutionVersion:
+    default: "1.0.4"
 
 jobs:
   package-solution: 
