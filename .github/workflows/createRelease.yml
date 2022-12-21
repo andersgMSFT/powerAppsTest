@@ -14,7 +14,7 @@ on:
         default: true
 
 env:
-  bcPowerAppsName: BcSampleAppSolution
+  bcPowerAppsName: BcSampleAppsSolution
 
 jobs:
   package-solution: 
