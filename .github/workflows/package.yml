@@ -6,11 +6,11 @@ on:
       solutionPath:
         required: true
         type: text
-        default: "BcSampleAppSolution"
+        default: "BcSampleAppsSolution"
       solutionName: 
         required: true
         type: text
-        default: "BcSampleAppSolution"
+        default: "BcSampleAppsSolution"
       solutionVersion: 
         required: true
         type: text
