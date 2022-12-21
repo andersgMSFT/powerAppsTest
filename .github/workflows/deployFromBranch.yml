@@ -12,6 +12,12 @@ on:
         description: Tag of this release (needs to be semantic version string https://semver.org, ex. 1.0.0)
         required: true
         default: "1.1.2"
+        type: text
+      postFix:
+        description: Postfix the solution name with 'dev'
+        required: true
+        default: true
+        type: boolean
 
 env:
   bcPowerAppsName: BcSampleAppsSolution
@@ -32,7 +38,7 @@ jobs:
       - name: Update solution version
         shell: pwsh
         run: |
-          script/updateSolutionVersion.ps1 -solutionPath ${{ env.bcPowerAppsName }}/Other/Solution.xml -version ${{ github.event.inputs.version }} -dev 1
+          script/updateSolutionVersion.ps1 -solutionPath ${{ env.bcPowerAppsName }}/Other/Solution.xml -version ${{ github.event.inputs.version }} -dev ${{ github.event.inputs.postFix }}
       
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
