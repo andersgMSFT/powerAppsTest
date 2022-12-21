@@ -1,0 +1,32 @@
+name: package-solution
+
+env: 
+  solutionPath: "BcSampleAppsSolution"
+  solutionName: "BcSampleAppsSolution"
+
+jobs:
+  package-solution: 
+    name: Package Solution
+    runs-on: ubuntu-latest 
+    steps:  
+      - name: Check out code
+        uses: actions/checkout@v3
+        
+      - name: Update solution version
+        shell: pwsh
+        run: |
+          script/updateSolutionVersion.ps1 -solutionPath ${{ github.event.inputs.solutionPath }}/Other/Solution.xml -version ${{ github.event.inputs.solutionVersion }}
+
+      - name: Pack Solution
+        uses: microsoft/powerplatform-actions/pack-solution@v0
+        with:
+          solution-file: 'output/${{ github.event.inputs.solutionName }}.zip'
+          solution-folder: ${{ github.event.inputs.solutionPath }}
+          solution-type: 'Unmanaged'
+          process-canvas-apps: true
+         
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: ${{ github.event.inputs.solutionVersion }}
+          path: output/${{ github.event.inputs.solutionName }}.zip
