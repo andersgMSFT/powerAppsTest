@@ -47,8 +47,9 @@ jobs:
           solution-type: 'Unmanaged'
           overwrite-files: true
           process-canvas-apps: true
+      
           
       - name: Git commit
-        run: git config user.email "git@example.com"; git config user.name "Workflow"; git add . ; git commit -m "pull latest solution changes"; git push;
+        run: git config user.email "git@workflow.com"; git config user.name "Workflow"; git add ${{ env.solutionName }} ; git commit -m "pull latest solution changes"; git push;
         
   
