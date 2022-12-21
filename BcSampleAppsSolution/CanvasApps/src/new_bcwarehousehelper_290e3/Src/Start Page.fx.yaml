@@ -85,7 +85,7 @@
         FontWeight: =FontWeight.Semibold
         Height: =103
         Size: =25
-        Text: ="Select the warehouse you are working on"
+        Text: ="Select the warehouse you will be working on"
         Width: =560
         X: =40
         Y: =128
