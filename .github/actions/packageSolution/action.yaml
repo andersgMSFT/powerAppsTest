@@ -1,5 +1,13 @@
 name: package-solution
 
+inputs:
+  solutionPath:
+    default: BcSampleAppsSolution
+  solutionName:
+    default: BcSampleAppsSolution
+  solutionVersion:
+    default: "1.0.4"
+
 jobs:
   package-solution:
     name: Package Solution
@@ -11,18 +19,18 @@ jobs:
       - name: Update solution version
         shell: pwsh
         run: |
-          script/updateSolutionVersion.ps1 -solutionPath ${{ env.solutionPath }}/Other/Solution.xml -version ${{ env.solutionVersion }}
+          script/updateSolutionVersion.ps1 -solutionPath ${{ github.event.inputs.solutionPath }}/Other/Solution.xml -version ${{ github.event.inputs.solutionVersion }}
 
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
-          solution-file: "output/${{ env.solutionName }}.zip"
-          solution-folder: ${{ env.solutionPath }}
+          solution-file: "output/${{ github.event.inputs.solutionName }}.zip"
+          solution-folder: ${{ github.event.inputs.solutionPath }}
           solution-type: "Unmanaged"
           process-canvas-apps: true
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.1
         with:
-          name: ${{ env.solutionVersion }}
-          path: output/${{ env.solutionName }}.zip
+          name: ${{ github.event.inputs.solutionVersion }}
+          path: output/${{ github.event.inputs.solutionName }}.zip

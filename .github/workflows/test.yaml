@@ -2,11 +2,6 @@ name: Test run package flow
 
 on: [workflow_dispatch]
 
-env: 
-  solutionPath: BcSampleAppsSolution
-  solutionPath: BcSampleAppsSolution
-  solutionVersion: "1.0.4"
-
 jobs:
   runPackage:
     runs-on: ubuntu-latest
