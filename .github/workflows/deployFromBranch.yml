@@ -14,7 +14,7 @@ on:
         default: "1.1.2"
 
 env:
-  bcPowerAppsName: BcSampleAppSolution
+  bcPowerAppsName: BcSampleAppsSolution
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
