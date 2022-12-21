@@ -49,6 +49,6 @@ jobs:
           process-canvas-apps: true
           
       - name: Git commit
-        run: git config user.email "git@example.com"; git config user.name "Workflow"; git add . ; git commit -m "pull latest solution changes"; git pull;
+        run: git config user.email "git@example.com"; git config user.name "Workflow"; git add . ; git commit -m "pull latest solution changes"; git push;
         
   
