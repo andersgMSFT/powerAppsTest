@@ -8,7 +8,7 @@ on:
         description: The environment to get latest changes from
         default: QA
 env:
-  solutionName: BcSampleAppSolution
+  solutionName: BcSampleAppsSolution
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -48,4 +48,6 @@ jobs:
           overwrite-files: true
           
       - name: Git commit
-        run:   git config user.email "git@example.com"; git config user.name "Workflow"; git add . ; git commit -m "pull latest solution changes"; git pull;
+        run: git config user.email "git@example.com"; git config user.name "Workflow"; git add . ; git commit -m "pull latest solution changes"; git pull;
+        
+  
