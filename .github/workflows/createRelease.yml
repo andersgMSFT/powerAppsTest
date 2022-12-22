@@ -95,7 +95,7 @@ jobs:
     - name: Upload unmanaged solution as artifact store
       uses: actions/upload-artifact@v2
       with:
-        name: Power Platform solution(${{ github.event.inputs.version }})
+        name: ${{ github.event.inputs.environment }}(${{ github.event.inputs.version }})
         path: output
 
   create-release:
