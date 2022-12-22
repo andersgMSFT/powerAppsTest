@@ -8,9 +8,9 @@ on:
         default: QA
         required: true
       version:
-        description: Tag of this release (needs to be semantic version string https://semver.org, ex. 1.0.0)
+        description: Tag of this release (needs to be semantic version string https://semver.org, ex. 1.0)
         required: true
-        default: "1.1.2"
+        default: "1.4"
         type: text
       postFix:
         description: Postfix the solution name with 'dev'
@@ -26,14 +26,18 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     environment: ${{github.event.inputs.environment}}
-    
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout branch
+        uses: actions/checkout@v3
+
+      - name: Set Postfix 
+        if: ${{github.event.inputs.postFix}}
+        run: echo "postFixText=dev" >> $GITHUB_ENV 
       
       - name: Update solution version
         shell: pwsh
         run: |
-          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}} -dev ${{github.event.inputs.postFix}}
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}} -postfix ${{env.postFixText}}
       
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0

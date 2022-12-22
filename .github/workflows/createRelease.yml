@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: Tag of this release (needs to be semantic version string https://semver.org, ex. 1.0.0)
+        description: Tag of this release (needs to be semantic version string https://semver.org, ex. 1.0)
         required: true
-        default: "1.1.2"
+        default: "1.5"
       environment:
         description: Environment
         required: true
@@ -31,7 +31,7 @@ jobs:
       - name: Update solution version
         shell: pwsh
         run: |
-          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}}
 
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0

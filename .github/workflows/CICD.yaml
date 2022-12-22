@@ -3,7 +3,7 @@ on:
   push:
     branches: [main]
 env:
-  version: 99.2.${{github.run_number}}
+  version: 99.9.${{github.run_number}}
   solutionName: "BcSampleAppsSolution"
   postFix: CICD
 
