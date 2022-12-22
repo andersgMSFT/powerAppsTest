@@ -95,7 +95,7 @@ jobs:
     - name: Upload unmanaged solution as artifact store
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ github.event.inputs.solutionName }}
+        name: Power Platform solution(${{ github.event.inputs.version }})
         path: output
 
   create-release:
@@ -103,6 +103,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: [download-managed-and-unmanaged]    
     steps:
+      - uses: actions/download-artifact@master
+        with:
+          name: ${{ github.event.inputs.version }}
+          path: ./
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -114,18 +119,13 @@ jobs:
           draft: ${{ github.event.inputs.draft }}
           prerelease: false
 
-      - uses: actions/download-artifact@master
-        with:
-          name: ${{ github.event.inputs.version }}
-          path: ./
-
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`
+          upload_url: ${{ steps.create_release.outputs.upload_url }} 
           asset_path: ${{ github.event.inputs.solutionName }}.zip
           asset_name: ${{ github.event.inputs.solutionName }}.zip
           asset_content_type: application/zip
