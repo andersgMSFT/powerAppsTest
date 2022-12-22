@@ -33,11 +33,7 @@ jobs:
       - name: Update solution version
         shell: pwsh
         run: |
-          script/updateSolutionVersion.ps1 
-            -solutionPath ${{ env.bcPowerAppsName }}/Other/Solution.xml 
-            -version ${{ github.event.inputs.version }} 
-            -dev [System.Convert]::ToBoolean(${{ github.event.inputs.postFix }})
- 
+          script/updateSolutionVersion.ps1 -solutionPath ${{ env.bcPowerAppsName }}/Other/Solution.xml -version ${{ github.event.inputs.version }} -dev [System.Convert]::ToBoolean(${{ github.event.inputs.postFix }}) 
       
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
