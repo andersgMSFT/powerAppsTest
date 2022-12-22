@@ -28,7 +28,7 @@ if ($xmlFile.Exists) {
     else {
         $nodeWithName = $xml.SelectSingleNode("//UniqueName");
         if ($nodeWithName.'#text' -match "__") {
-            $postFixIndex = $nodeWithName.'#text'.LastIndexOf("__");
+            $postFixIndex = $nodeWithName.'#text'.IndexOf("__");
             $newName = $nodeWithName.'#text'.subString($postFixIndex)
             Write-Host "Updating solution name: "$newName;
             $nodeWithName.'#text' = $newName;    
