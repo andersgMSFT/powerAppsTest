@@ -21,6 +21,7 @@ Packages and deploys the solution to a specified environment.
 **Get latest solution changes**
 
 NOTE: Cannot be run from main - to avoid direct commits 
+
 Exports the Power platform solution from a specified environment. Unpacks the code and pushed a commit to your branch with the changes 
 
 ## Missing functionality
@@ -33,7 +34,8 @@ Exports the Power platform solution from a specified environment. Unpacks the co
 
 ## Example of development work flow 
 1. Create a new branch based on master 
-2. Run "Deploy solution from branch to your dev environment" 
+2. Run "Deploy solution from branch" to your dev environment 
 3. Log in to make.powerapps.com and make the changes you want 
-4. Run "Get latest solution changes" in your dev branch 
+4. Run "Get latest solution changes" in the branch 
 5. Create a PR with you changes 
+6. Done 
