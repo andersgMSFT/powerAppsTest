@@ -30,7 +30,7 @@ jobs:
         if: ${{github.event.inputs.useDev}}
         run: echo "solutionUniqueName=${{env.solutionName}}_dev" >> $GITHUB_ENV 
         
-      - name: Check unique solution name
+      - name: Show unique solution name
         run: echo echo $solutionUniqueName
       
       - name: Checkout code
@@ -59,10 +59,8 @@ jobs:
           solution-folder: ${{ env.solutionName }}
           solution-type: 'Unmanaged'
           overwrite-files: true
-          process-canvas-apps: true
-      
+          process-canvas-apps: true   
           
-      - name: Git commit
-        run: git config user.email "git@workflow.com"; git config user.name "Workflow"; git add ${{ env.solutionName }} ; git commit -m "pull latest solution changes"; git push;
-        
-  
+      - name: Commit changes (if there are any) 
+        if: git status --porcelain
+        run: git config user.email "git@workflow.com"; git config user.name "Workflow"; git add ${{ env.solutionName }} ; git commit -m "pull latest solution changes"; git push; 
