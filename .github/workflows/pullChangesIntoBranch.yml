@@ -14,6 +14,7 @@ on:
     
 env:
   solutionName: BcSampleAppsSolution
+  solutionUniqueName: env.solutionName
 
 jobs:
   get-changes:
@@ -23,7 +24,7 @@ jobs:
     steps:    
       - name: Assign solution name
         if: ${{github.event.inputs.useDev}}
-        run: echo "solutionName=${{env.solutionName}}_dev" >> $GITHUB_ENV 
+        run: echo "solutionUniqueName=${{env.solutionName}}_dev" >> $GITHUB_ENV 
         
       - name: Check solution name
         run: echo echo $solutionName
@@ -44,7 +45,7 @@ jobs:
           user-name: ${{ secrets.PowerUser }}
           password-secret: ${{ secrets.PowerPassword }}
           environment-url: ${{ secrets.PowerEnv }}
-          solution-name: ${{ env.solutionName }}
+          solution-name: ${{ env.solutionUniqueName }} #This is using the unique name so we can specify if dev or normal version
           solution-output-file: ${{ env.solutionName }}.zip
 
       - name: unpack-solution action
