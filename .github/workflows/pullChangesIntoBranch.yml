@@ -23,7 +23,7 @@ jobs:
     
     steps:    
       - name: Check if main branch 
-        if: ${{ github.ref_name }} == "main"
+        if: ${{ github.ref_name == "main" }}
         run: echo "Please create a new branch to avoid direct commits to main " + ${{ github.ref_name }};  exit 2;
         
       - name: Assign unique solution name
