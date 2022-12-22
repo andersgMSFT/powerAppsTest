@@ -95,7 +95,7 @@ jobs:
     - name: Upload unmanaged solution as artifact store
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ github.event.inputs.environment }}(${{ github.event.inputs.version }})
+        name: ${{ github.event.inputs.version }} - ${{ github.event.inputs.solutionName }}(${{ github.event.inputs.environment }})
         path: output
 
   create-release:
@@ -105,8 +105,8 @@ jobs:
     steps:
       - uses: actions/download-artifact@master
         with:
-          name: ${{ github.event.inputs.version }}
-          path: ./
+          name: ${{ github.event.inputs.version }} - ${{ github.event.inputs.solutionName }}(${{ github.event.inputs.environment }})
+          path: output
 
       - name: Create Release
         id: create_release
@@ -115,7 +115,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.event.inputs.version }}
-          release_name: ${{ github.event.inputs.solutionName }} (${{ github.event.inputs.version }})
+          release_name: ${{ github.event.inputs.version }} - ${{ github.event.inputs.solutionName }}(${{ github.event.inputs.environment }})
           draft: ${{ github.event.inputs.draft }}
           prerelease: false
 
@@ -126,6 +126,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ${{ github.event.inputs.solutionName }}.zip
-          asset_name: ${{ github.event.inputs.solutionName }}.zip
+          asset_path: output/*
+          asset_name: solution
           asset_content_type: application/zip
