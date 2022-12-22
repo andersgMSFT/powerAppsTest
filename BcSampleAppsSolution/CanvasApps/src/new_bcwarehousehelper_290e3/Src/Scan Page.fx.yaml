@@ -43,7 +43,7 @@
 
     Header_component As Header:
         backButton_onClick: =Back(ScreenTransition.UnCoverRight)
-        titleInput: =ctxLocation.displayName
+        titleInput: ="Start scanning"
         ZIndex: =3
 
     figOverlay As rectangle:

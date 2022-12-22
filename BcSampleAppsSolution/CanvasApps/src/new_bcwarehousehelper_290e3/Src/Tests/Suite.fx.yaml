@@ -9,13 +9,13 @@
         Step1 As TestStep:
             Description: |-
                 ="Indstil 'warehouse_Dropdown'.Selected til {'Value':""Magazijn Oost""}"
-            Screen: =Start Page
+            Screen: =
             Value: |-
                 =SetProperty(warehouse_Dropdown.Selected, {Value:"Magazijn Oost"})
 
         Step2 As TestStep:
             Description: ="Vælg 'start_button'"
-            Screen: =Start Page
+            Screen: =
             Value: =Select(start_button)
 
         Step3 As TestStep:
