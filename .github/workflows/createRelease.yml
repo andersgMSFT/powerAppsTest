@@ -36,12 +36,20 @@ jobs:
         solution-folder: ${{ env.bcPowerAppsName }}
         solution-type: 'Unmanaged'
         process-canvas-apps: true
-         
+        
+    - name: Pack Solution (managed)
+      uses: microsoft/powerplatform-actions/pack-solution@v0
+      with:
+        solution-file: 'output/${{ env.bcPowerAppsName }}.zip'
+        solution-folder: ${{ env.bcPowerAppsName }}
+        solution-type: 'managed'
+        process-canvas-apps: true
+        
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.1
       with:
         name: ${{ github.event.inputs.version }}
-        path: output/${{ env.bcPowerAppsName }}.zip
+        path: output/*
 
   create-release:
     runs-on: ubuntu-latest
