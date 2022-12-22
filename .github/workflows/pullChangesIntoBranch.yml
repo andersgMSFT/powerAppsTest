@@ -14,7 +14,7 @@ on:
     
 env:
   solutionName: BcSampleAppsSolution
-  solutionUniqueName: ${{env.solutionName}}
+  solutionUniqueName: BcSampleAppsSolution
 
 jobs:
   get-changes:
