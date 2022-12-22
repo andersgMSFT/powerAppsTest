@@ -65,9 +65,7 @@ jobs:
         run: rm ${{ env.solutionName }}.zip 
       
       - name: Check for git changes
-        run: |
-          $gitChanges = git status --porcelain;
-          echo "areThereGitChanges=($gitChanges)" >> $GITHUB_ENV 
+        run: $gitChanges = git status --porcelain; echo "areThereGitChanges=($gitChanges)" >> $GITHUB_ENV 
       
       - name: Show git changes
         run: echo echo $areThereGitChanges
