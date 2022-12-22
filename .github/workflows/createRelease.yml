@@ -7,19 +7,25 @@ on:
         description: Tag of this release (needs to be semantic version string https://semver.org, ex. 1.0.0)
         required: true
         default: "1.1.2"
+      environment:
+        description: Environment
+        required: true
+        default: "QA"
+      solutionName:
+        description: Name of the Power Platform solution
+        required: true
+        default: "BcSampleAppsSolution"
       draft:
         description: Create as deaft.
         required: true
         type: boolean
         default: true
 
-env:
-  bcPowerAppsName: BcSampleAppsSolution
+environment: ${{ github.event.inputs.environment }}
 
 jobs:
-  package-solution: 
-    runs-on: ubuntu-latest
-    
+  package-and-deploy: 
+    runs-on: ubuntu-latest    
     steps:
     - name: Check out code
       uses: actions/checkout@v3
@@ -27,34 +33,74 @@ jobs:
     - name: Update solution version
       shell: pwsh
       run: |
-        script/updateSolutionVersion.ps1 -solutionPath ${{ env.bcPowerAppsName }}/Other/Solution.xml -version ${{ github.event.inputs.version }}
+        script/updateSolutionVersion.ps1 -solutionPath ${{ github.event.inputs.solutionName }}/Other/Solution.xml -version ${{ github.event.inputs.version }}
 
     - name: Pack Solution
       uses: microsoft/powerplatform-actions/pack-solution@v0
       with:
-        solution-file: 'output/${{ env.bcPowerAppsName }}.zip'
-        solution-folder: ${{ env.bcPowerAppsName }}
+        solution-file: 'output/${{ github.event.inputs.solutionName }}.zip'
+        solution-folder: ${{ github.event.inputs.solutionName }}
         solution-type: 'Unmanaged'
         process-canvas-apps: true
-        
-    - name: Pack Solution (managed)
-      uses: microsoft/powerplatform-actions/pack-solution@v0
+
+    - name: Who am I 
+      uses: microsoft/powerplatform-actions/who-am-i@v0
       with:
-        solution-file: 'output/${{ env.bcPowerAppsName }}.zip'
-        solution-folder: ${{ env.bcPowerAppsName }}
-        solution-type: 'managed'
-        process-canvas-apps: true
-        
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v3.1.1
+        user-name: ${{ secrets.PowerUser }}
+        password-secret: ${{ secrets.PowerPassword }}
+        environment-url: ${{ secrets.PowerEnv }}        
+          
+    - name: Publish solution to Power Platform
+      uses: microsoft/powerplatform-actions/import-solution@v0
       with:
-        name: ${{ github.event.inputs.version }}
+        user-name: ${{ secrets.PowerUser }}
+        password-secret: ${{ secrets.PowerPassword }}
+        environment-url: ${{ secrets.PowerEnv }}
+        solution-file: output/${{ github.event.inputs.solutionName }}.zip
+        force-overwrite: true
+        publish-changes: true
+  
+  download-managed-and-unmanaged: 
+    runs-on: ubuntu-latest
+    needs: [package-and-deploy]   
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: who-am-i action
+      uses: microsoft/powerplatform-actions/who-am-i@v0
+      with:
+        user-name: ${{ secrets.PowerUser }}
+        password-secret: ${{ secrets.PowerPassword }}
+        environment-url: ${{ secrets.PowerEnv }}
+
+    - name: export-solution (unmanged)
+      uses: microsoft/powerplatform-actions/export-solution@v0
+      with:
+        user-name: ${{ secrets.PowerUser }}
+        password-secret: ${{ secrets.PowerPassword }}
+        environment-url: ${{ secrets.PowerEnv }}
+        solution-name: ${{ github.event.inputs.solutionName }}
+        solution-output-file: output/${{ env.solutionName }}.zip
+
+    - name: export-solution (managed)
+      uses: microsoft/powerplatform-actions/export-solution@v0
+      with:
+        user-name: ${{ secrets.PowerUser }}
+        password-secret: ${{ secrets.PowerPassword }}
+        environment-url: ${{ secrets.PowerEnv }}
+        solution-name: ${{ github.event.inputs.solutionName }}
+        solution-output-file: output/${{ env.solutionName }}_managed.zip
+    
+    - name: Upload solution as artifact store
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ env.bcPowerAppsName }}
         path: output/*
 
   create-release:
     runs-on: ubuntu-latest
-    needs: [package-solution]
-    
+    needs: [download-managed-and-unmanaged]    
     steps:
       - name: Create Release
         id: create_release
@@ -63,7 +109,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.event.inputs.version }}
-          release_name: ${{ env.bcPowerAppsName }} (${{ github.event.inputs.version }})
+          release_name: ${{ github.event.inputs.solutionName }} (${{ github.event.inputs.version }})
           draft: ${{ github.event.inputs.draft }}
           prerelease: false
 
@@ -79,6 +125,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`
-          asset_path: ${{ env.bcPowerAppsName }}.zip
-          asset_name: ${{ env.bcPowerAppsName }}.zip
+          asset_path: ${{ github.event.inputs.solutionName }}.zip
+          asset_name: ${{ github.event.inputs.solutionName }}.zip
           asset_content_type: application/zip
