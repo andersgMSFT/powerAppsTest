@@ -62,5 +62,5 @@ jobs:
           process-canvas-apps: true   
           
       - name: Commit changes (if there are any) 
-        if: git status --porcelain
+        if: ${{git status --porcelain}}
         run: git config user.email "git@workflow.com"; git config user.name "Workflow"; git add ${{ env.solutionName }} ; git commit -m "pull latest solution changes"; git push; 
