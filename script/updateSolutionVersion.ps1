@@ -17,7 +17,7 @@ if ($xmlFile.Exists) {
     Write-Host "Updating version: "$version;
     $node.'#text' = $version;
 
-    if ($dev -eq true) {
+    if ($dev -eq "true") {
         $nodeWithName = $xml.SelectSingleNode("//UniqueName");
         $newName = $nodeWithName.'#text' + "_dev"
         Write-Host "Updating solution name: "$newName;
