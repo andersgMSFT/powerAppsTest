@@ -1,7 +1,7 @@
 name: Deploy solution from branch
 on:
-  commit:
-    [main]
+  push:
+    branches: [main]
 
 env:
   environment: QA
@@ -25,8 +25,8 @@ jobs:
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
-          solution-file: 'output/${{ env.solutionName }}.zip'
-          solution-folder: '${{ env.solutionName }}'
+          solution-file: 'output/${{env.solutionName}}.zip'
+          solution-folder: '${{env.solutionName}}'
           solution-type: 'Unmanaged'
           process-canvas-apps: true
 
