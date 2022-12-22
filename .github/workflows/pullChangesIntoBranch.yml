@@ -66,4 +66,4 @@ jobs:
         
       - name: Commit changes (if there are any) 
         shell: pwsh
-        run: script/commitGitChanges.ps1 -solutionName ${{ env.solutionName }} -environmentName ${{github.event.inputs.environment}}
+        run: .github/actions/script/commitGitChanges.ps1 -solutionName ${{ env.solutionName }} -environmentName ${{github.event.inputs.environment}}

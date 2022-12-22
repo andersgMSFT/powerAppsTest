@@ -1,5 +1,4 @@
 name: Create release
-
 on:
   workflow_dispatch:
     inputs:
@@ -16,7 +15,7 @@ on:
         required: true
         default: "BcSampleAppsSolution"
       draft:
-        description: Create as deaft.
+        description: Create as draft
         required: true
         type: boolean
         default: true
@@ -32,7 +31,7 @@ jobs:
       - name: Update solution version
         shell: pwsh
         run: |
-          script/updateSolutionVersion.ps1 -solutionPath ${{ github.event.inputs.solutionName }}/Other/Solution.xml -version ${{ github.event.inputs.version }}
+          .github/actions/script/updateSolutionVersion.ps1 -solutionPath ${{ github.event.inputs.solutionName }}/Other/Solution.xml -version ${{ github.event.inputs.version }}
 
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0

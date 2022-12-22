@@ -19,7 +19,7 @@ jobs:
       - name: Update solution version
         shell: pwsh
         run: |
-          script/updateSolutionVersion.ps1 -solutionPath ${{ inputs.solutionPath }}/Other/Solution.xml -version ${{ inputs.solutionVersion }}
+          .github/actions/script/updateSolutionVersion.ps1 -solutionPath ${{ inputs.solutionPath }}/Other/Solution.xml -version ${{ inputs.solutionVersion }}
 
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
