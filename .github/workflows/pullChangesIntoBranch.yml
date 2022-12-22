@@ -22,10 +22,11 @@ jobs:
     
     steps:    
       - name: Assign solution name
-        run: if(${{github.event.inputs.useDev}} ){ echo "powerSolution=${{env.solutionName}}_dev" >> $GITHUB_ENV } else {echo "powerSolution=${{env.solutionName}}" >> $GITHUB_ENV}
-      
+        if: ${{github.event.inputs.useDev}}
+        run: echo "solutionName=${{env.solutionName}}_dev" >> $GITHUB_ENV 
+        
       - name: Check solution name
-        run: echo echo $powerSolution
+        run: echo echo $solutionName
       
       - name: Checkout code
         uses: actions/checkout@v3
