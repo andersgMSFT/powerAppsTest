@@ -3,7 +3,6 @@ on:
   push:
     branches: [main]
 env:
-  environment: QA
   version: "1.2"
   postFix: true
   solutionName: "BcSampleAppsSolution"
@@ -11,7 +10,7 @@ env:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    environment: ${{env.environment}}
+    environment: QA
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
