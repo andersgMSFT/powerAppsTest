@@ -62,14 +62,8 @@ jobs:
           process-canvas-apps: true   
       
       - name: Remove zip file
-        run: rm ${{ env.solutionName }}.zip 
-      
-      - name: Check for git changes
-        run: $gitChanges = git status --porcelain; echo "areThereGitChanges=($gitChanges)" >> $GITHUB_ENV 
-      
-      - name: Show git changes
-        run: echo echo $areThereGitChanges
-      
+        run: rm ${{ env.solutionName }}.zip  
+        
       - name: Commit changes (if there are any) 
-        if: ${{ env.areThereGitChanges }}
-        run: git config user.email "git@workflow.com"; git config user.name "Workflow"; git add ${{ env.solutionName }} ; git commit -m "pull latest solution changes"; git push; 
+        shell: pwsh
+        run: script/commitGitChanges.ps1 -solutionName ${{ env.solutionName }}
