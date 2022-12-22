@@ -10,6 +10,7 @@ Automatically deploys an new version of the solution to QA environment when a pu
 **Create release**
 
 Creates a release with a managed and unmanaged version of the solution.
+
 NOTE: Whether a solution is managed or unmanages is determined by the way it is exported from Power Apps. So the flow right now is that we package the solution, deploy to Power Apps (on a specific environment), export both the managed and unmanaged solution and upload both files to the release. Look into better flow.
 
 
