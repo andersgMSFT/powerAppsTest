@@ -67,6 +67,9 @@ jobs:
       - name: Check for git changes
         run: echo "areThereGitChanges=(git status --porcelain)" >> $GITHUB_ENV 
       
+      - name: Show git changes
+        run: echo echo $areThereGitChanges
+      
       - name: Commit changes (if there are any) 
         if: ${{ env.areThereGitChanges }}
         run: git config user.email "git@workflow.com"; git config user.name "Workflow"; git add ${{ env.solutionName }} ; git commit -m "pull latest solution changes"; git push; 
