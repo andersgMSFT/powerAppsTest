@@ -6,6 +6,7 @@ env:
   version: "1.2"
   postFix: true
   solutionName: "BcSampleAppsSolution"
+  postFix: ""
 
 jobs:
   build-and-deploy:
@@ -14,11 +15,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Assign unique solution name
+        if: ${{github.event.inputs.useDev}}
+        run: echo "postFix=${{env.postFix}}_dev" >> $GITHUB_ENV 
       
       - name: Update solution version
         shell: pwsh
         run: |
-          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{env.solutionName}}/Other/Solution.xml -version ${{env.version}} -dev ${{env.postFix}}
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{env.solutionName}}/Other/Solution.xml -version ${{env.version}} -postFix ${{env.postFix}}
       
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
