@@ -22,12 +22,12 @@ jobs:
     environment: ${{github.event.inputs.environment}}   
     
     steps:    
-      - name: Assign solution name
+      - name: Assign unique solution name
         if: ${{github.event.inputs.useDev}}
         run: echo "solutionUniqueName=${{env.solutionName}}_dev" >> $GITHUB_ENV 
         
-      - name: Check solution name
-        run: echo echo $solutionName
+      - name: Check unique solution name
+        run: echo echo $solutionUniqueName
       
       - name: Checkout code
         uses: actions/checkout@v3
