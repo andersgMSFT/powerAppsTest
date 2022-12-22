@@ -3,10 +3,10 @@ on:
   push:
     branches: [main]
 env:
-  version: "1.2"
+  version: "99.2."${{github.run_number}}
   postFix: true
   solutionName: "BcSampleAppsSolution"
-  postFix: ""
+  postFix: "CICD"
 
 jobs:
   build-and-deploy:
@@ -16,10 +16,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Assign unique solution name
-        if: ${{github.event.inputs.useDev}}
-        run: echo "postFix=${{env.postFix}}_dev" >> $GITHUB_ENV 
-      
       - name: Update solution version
         shell: pwsh
         run: |
