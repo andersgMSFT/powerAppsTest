@@ -33,7 +33,7 @@ jobs:
       - name: Update solution version
         shell: pwsh
         run: |
-          .github/actions/script/updateSolutionVersion.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}} -dev ${{github.event.inputs.postFix}}
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}} -dev ${{github.event.inputs.postFix}}
       
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
