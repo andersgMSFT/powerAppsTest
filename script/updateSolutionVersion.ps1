@@ -5,7 +5,7 @@ param(
     [Parameter(Position = 0, mandatory = $true)]
     [string] $version,
     [Parameter(Position = 0, mandatory = $false)]
-    [bool] $dev
+    [string] $dev
 )
 
 $xmlFile = (Get-ChildItem $solutionPath);
@@ -17,7 +17,7 @@ if ($xmlFile.Exists) {
     Write-Host "Updating version: "$version;
     $node.'#text' = $version;
 
-    if ($dev) {
+    if ($dev -eq true) {
         $nodeWithName = $xml.SelectSingleNode("//UniqueName");
         $newName = $nodeWithName.'#text' + "_dev"
         Write-Host "Updating solution name: "$newName;
