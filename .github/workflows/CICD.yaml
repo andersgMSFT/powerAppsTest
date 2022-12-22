@@ -18,7 +18,7 @@ jobs:
       - name: Update solution version
         shell: pwsh
         run: |
-          .github/actions/script/updateSolutionVersion.ps1 -solutionPath ${{ env.solutionName }}/Other/Solution.xml -version ${{ env.version }} -dev ${{ env.postFix }}
+          .github/actions/script/updateSolutionVersion.ps1 -solutionPath ${{env.solutionName}}/Other/Solution.xml -version ${{env.version}} -dev ${{env.postFix}}
       
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
@@ -31,22 +31,22 @@ jobs:
       - name: Who am I 
         uses: microsoft/powerplatform-actions/who-am-i@v0
         with:
-          user-name: ${{ secrets.PowerUser }}
-          password-secret: ${{ secrets.PowerPassword }}
-          environment-url: ${{ secrets.PowerEnv }}        
+          user-name: ${{secrets.PowerUser}}
+          password-secret: ${{secrets.PowerPassword}}
+          environment-url: ${{secrets.PowerEnv}}        
           
       - name: Publish solution to Power Platform
         uses: microsoft/powerplatform-actions/import-solution@v0
         with:
-          user-name: ${{ secrets.PowerUser }}
-          password-secret: ${{ secrets.PowerPassword }}
-          environment-url: ${{ secrets.PowerEnv }}
-          solution-file: output/${{ env.solutionName }}.zip
+          user-name: ${{secrets.PowerUser}}
+          password-secret: ${{secrets.PowerPassword}}
+          environment-url: ${{secrets.PowerEnv}}
+          solution-file: output/${{env.solutionName}}.zip
           force-overwrite: true
           publish-changes: true
 
       - name: Upload solution as artifact store
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.solutionName }}
-          path: output/${{ env.solutionName }}.zip
+          name: ${{env.solutionName}}
+          path: output/${{env.solutionName}}.zip
