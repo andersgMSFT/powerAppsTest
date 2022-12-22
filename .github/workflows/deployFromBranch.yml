@@ -2,6 +2,10 @@ name: Deploy solution from branch
 on:
   workflow_dispatch:
     inputs:
+      solutionName:
+        description: Name of the Power Platform solution
+        required: true
+        default: BcSampleAppsSolution
       environment:
         type: text
         description: The environment to deploy to
@@ -17,10 +21,6 @@ on:
         required: true
         default: true
         type: boolean
-      solutionName:
-        description: Name of the Power Platform solution
-        required: true
-        default: "BcSampleAppsSolution"
 
 jobs:
   build-and-deploy:
@@ -64,7 +64,7 @@ jobs:
           force-overwrite: true
           publish-changes: true
 
-      - name: Upload solution as artifact store
+      - name: Upload solution as artifact
         uses: actions/upload-artifact@v2
         with:
           name: ${{github.event.inputs.solutionName}}
