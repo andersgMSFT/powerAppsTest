@@ -22,7 +22,7 @@ jobs:
     
     steps:    
       - name: Assign solution name
-        run: echo "powerSolution=${{env.solutionName}}" >> $GITHUB_ENV
+        run: if(${{github.event.inputs.useDev}} ){ echo "powerSolution=${{env.solutionName}}_dev" >> $GITHUB_ENV } else {echo "powerSolution=${{env.solutionName}}" >> $GITHUB_ENV}
       
       - name: Check solution name
         run: echo echo $powerSolution
