@@ -36,15 +36,11 @@
         "dataSources": {
           "items (v2.0)": {
             "tableName": "items,v2.0"
-          },
-          "locations (v2.0)": {
-            "tableName": "locations,v2.0"
           }
         }
       }
     },
     "dataSources": [
-      "locations (v2.0)",
       "items (v2.0)"
     ],
     "dependencies": {},

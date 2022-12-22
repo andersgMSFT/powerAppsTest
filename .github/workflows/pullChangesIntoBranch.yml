@@ -14,7 +14,7 @@ on:
     
 env:
   solutionName: BcSampleAppsSolution
-  solutionUniqueName: ${{env.solutionName}}
+  solutionUniqueName: BcSampleAppsSolution
 
 jobs:
   get-changes:
@@ -23,14 +23,14 @@ jobs:
     
     steps:    
       - name: Check if main branch 
-        if: ${{ github.ref_name }} == "main"
+        if: ${{ github.ref_name == 'main' }}
         run: echo "Please create a new branch to avoid direct commits to main " + ${{ github.ref_name }};  exit 2;
         
       - name: Assign unique solution name
         if: ${{github.event.inputs.useDev}}
         run: echo "solutionUniqueName=${{env.solutionName}}_dev" >> $GITHUB_ENV 
         
-      - name: Check unique solution name
+      - name: Show unique solution name
         run: echo echo $solutionUniqueName
       
       - name: Checkout code
@@ -59,10 +59,11 @@ jobs:
           solution-folder: ${{ env.solutionName }}
           solution-type: 'Unmanaged'
           overwrite-files: true
-          process-canvas-apps: true
+          process-canvas-apps: true   
       
-          
-      - name: Git commit
-        run: git config user.email "git@workflow.com"; git config user.name "Workflow"; git add ${{ env.solutionName }} ; git commit -m "pull latest solution changes"; git push;
+      - name: Remove zip file
+        run: rm ${{ env.solutionName }}.zip  
         
-  
+      - name: Commit changes (if there are any) 
+        shell: pwsh
+        run: script/commitGitChanges.ps1 -solutionName ${{ env.solutionName }} -environmentName ${{github.event.inputs.environment}}
