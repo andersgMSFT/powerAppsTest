@@ -61,6 +61,9 @@ jobs:
           overwrite-files: true
           process-canvas-apps: true   
       
+      - name: Remove zip file
+        run: rm ${{ env.solutionName }} 
+      
       - name: Check for git changes
         run: echo "areThereGitChanges=(git status --porcelain)" >> $GITHUB_ENV 
       
