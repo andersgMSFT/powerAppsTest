@@ -7,31 +7,32 @@ on:
         type: text
         description: The environment to get latest changes from
         default: QA
+      solutionName:
+        type: text
+        description: The name of the solution
+        default: BcSampleAppsSolution
       useDev:
         type: boolean 
         description: Search for the dev version of the solution
         default: true
-    
-env:
-  solutionName: BcSampleAppsSolution
-  solutionUniqueName: BcSampleAppsSolution
 
 jobs:
   get-changes:
     runs-on: ubuntu-latest
     environment: ${{github.event.inputs.environment}}   
-    
+    env:
+      solutionUniqueName: ${{github.event.inputs.solutionName}}  
     steps:    
       - name: Check if main branch 
         if: ${{github.ref_name == 'main'}}
-        run: echo "Please create a new branch to avoid direct commits to main " + ${{github.ref_name}};  exit 2;
+        run: echo "Please create a new branch to avoid direct commits to main. Current branch -->" + ${{github.ref_name}};  exit 2;
         
       - name: Assign unique solution name
         if: ${{github.event.inputs.useDev}}
         run: echo "solutionUniqueName=${{env.solutionName}}_dev" >> $GITHUB_ENV 
         
       - name: Show unique solution name
-        run: echo echo $solutionUniqueName
+        run: echo $solutionUniqueName
       
       - name: Checkout code
         uses: actions/checkout@v3
