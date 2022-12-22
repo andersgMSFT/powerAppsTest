@@ -19,18 +19,18 @@ jobs:
       - name: Update solution version
         shell: pwsh
         run: |
-          .github/actions/script/updateSolutionVersion.ps1 -solutionPath ${{ inputs.solutionPath }}/Other/Solution.xml -version ${{ inputs.solutionVersion }}
+          .github/actions/script/updateSolutionVersion.ps1 -solutionPath ${{inputs.solutionPath}}/Other/Solution.xml -version ${{inputs.solutionVersion}}
 
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
-          solution-file: "output/${{ inputs.solutionName }}.zip"
-          solution-folder: ${{ inputs.solutionPath }}
+          solution-file: "output/${{inputs.solutionName}}.zip"
+          solution-folder: ${{inputs.solutionPath}}
           solution-type: "Unmanaged"
           process-canvas-apps: true
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.1
         with:
-          name: ${{ inputs.solutionVersion }}
-          path: output/${{ inputs.solutionName }}.zip
+          name: ${{inputs.solutionVersion}}
+          path: output/${{inputs.solutionName}}.zip

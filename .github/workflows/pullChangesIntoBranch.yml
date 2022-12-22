@@ -23,8 +23,8 @@ jobs:
     
     steps:    
       - name: Check if main branch 
-        if: ${{ github.ref_name == 'main' }}
-        run: echo "Please create a new branch to avoid direct commits to main " + ${{ github.ref_name }};  exit 2;
+        if: ${{github.ref_name == 'main'}}
+        run: echo "Please create a new branch to avoid direct commits to main " + ${{github.ref_name}};  exit 2;
         
       - name: Assign unique solution name
         if: ${{github.event.inputs.useDev}}
@@ -39,31 +39,31 @@ jobs:
       - name: who-am-i action
         uses: microsoft/powerplatform-actions/who-am-i@v0
         with:
-          user-name: ${{ secrets.PowerUser }}
-          password-secret: ${{ secrets.PowerPassword }}
-          environment-url: ${{ secrets.PowerEnv }}
+          user-name: ${{secrets.PowerUser}}
+          password-secret: ${{secrets.PowerPassword}}
+          environment-url: ${{secrets.PowerEnv}}
 
       - name: export-solution action
         uses: microsoft/powerplatform-actions/export-solution@v0
         with:
-          user-name: ${{ secrets.PowerUser }}
-          password-secret: ${{ secrets.PowerPassword }}
-          environment-url: ${{ secrets.PowerEnv }}
-          solution-name: ${{ env.solutionUniqueName }} #This is using the unique name so we can specify if dev or normal version
-          solution-output-file: ${{ env.solutionName }}.zip
+          user-name: ${{secrets.PowerUser}}
+          password-secret: ${{secrets.PowerPassword}}
+          environment-url: ${{secrets.PowerEnv}}
+          solution-name: ${{env.solutionUniqueName}} #This is using the unique name so we can specify if dev or normal version
+          solution-output-file: ${{env.solutionName}}.zip
 
       - name: unpack-solution action
         uses: microsoft/powerplatform-actions/unpack-solution@v0
         with:
-          solution-file: ${{ env.solutionName }}.zip
-          solution-folder: ${{ env.solutionName }}
+          solution-file: ${{env.solutionName}}.zip
+          solution-folder: ${{env.solutionName}}
           solution-type: 'Unmanaged'
           overwrite-files: true
           process-canvas-apps: true   
       
       - name: Remove zip file
-        run: rm ${{ env.solutionName }}.zip  
+        run: rm ${{env.solutionName}}.zip  
         
       - name: Commit changes (if there are any) 
         shell: pwsh
-        run: .github/actions/script/commitGitChanges.ps1 -solutionName ${{ env.solutionName }} -environmentName ${{github.event.inputs.environment}}
+        run: .github/actions/script/commitGitChanges.ps1 -solutionName ${{env.solutionName}} -environmentName ${{github.event.inputs.environment}}
