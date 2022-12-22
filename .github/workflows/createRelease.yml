@@ -21,9 +21,8 @@ on:
         type: boolean
         default: true
 
-environment: ${{ github.event.inputs.environment }}
-
 jobs:
+  environment: ${{github.event.inputs.environment}}
   package-and-deploy: 
     runs-on: ubuntu-latest    
     steps:
