@@ -89,6 +89,7 @@ jobs:
           password-secret: ${{secrets.PowerPassword}}
           environment-url: ${{secrets.PowerEnv}}
           solution-name: ${{github.event.inputs.solutionName}}
+          managed: true
           solution-output-file: output/${{github.event.inputs.solutionName}}_managed.zip
 
       - name: Upload unmanaged solution as artifact store
