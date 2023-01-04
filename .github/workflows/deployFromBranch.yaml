@@ -2,6 +2,10 @@ name: Test flow
 on:
   workflow_dispatch:
     inputs:
+      solutionName:
+        description: Name of the Power Platform solution
+        required: true
+        default: BcSampleAppsSolution
       managed:
         description: Deploy the solution as a managed solution
         required: true
