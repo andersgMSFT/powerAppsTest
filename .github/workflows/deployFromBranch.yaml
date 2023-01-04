@@ -23,13 +23,17 @@ jobs:
       - name: Update solution version
         shell: pwsh
         run: |
-          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}} -postfix ${{env.postFixText}} -managed ${{env.managed}}
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}} -managed ${{env.managed}}
+
+      - name: Set managed envVariable
+        if: ${{github.event.inputs.managed}}
+        run: echo "packageType=Manage" >> $GITHUB_ENV
 
       - name: Pack Unmanged solution
         if: ${{github.event.inputs.managed}}
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
-          solution-file: "output/${{github.event.inputs.solutionName}}.zip"
-          solution-folder: "${{github.event.inputs.solutionName}}"
-          solution-type: "Unmanaged"
+          solution-file: output/${{github.event.inputs.solutionName}}.zip
+          solution-folder: ${{github.event.inputs.solutionName}}
+          solution-type: ${{env.packageType}}
           process-canvas-apps: true
