@@ -18,7 +18,7 @@ jobs:
 
       - name: Set managed envVariable
         if: ${{github.event.inputs.managed}}
-        run: echo "deployManaged=$true" >> $GITHUB_ENV
+        run: echo "deployManaged=true" >> $GITHUB_ENV
 
       - name: Update solution version
         shell: pwsh
