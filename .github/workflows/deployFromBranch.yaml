@@ -31,7 +31,7 @@ jobs:
 
       - name: Set managed envVariable
         if: ${{github.event.inputs.managed}}
-        run: echo "packageType=Manage" >> $GITHUB_ENV
+        run: echo "packageType=Managed" >> $GITHUB_ENV
 
       - name: Pack Unmanged solution
         if: ${{github.event.inputs.managed}}
