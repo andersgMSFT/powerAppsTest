@@ -21,7 +21,7 @@ on:
         default: true
 
 jobs:
-  package-solutions:
+  package-and-release:
     environment: ${{github.event.inputs.environment}}
     runs-on: ubuntu-latest
     steps:

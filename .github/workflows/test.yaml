@@ -1,0 +1,35 @@
+name: Test flow
+on:
+  workflow_dispatch:
+    inputs:
+      managed:
+        description: Deploy the solution as a managed solution
+        required: true
+        default: false
+        type: boolean
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: ${{github.event.inputs.environment}}
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+
+      - name: Set managed envVariable
+        if: ${{github.event.inputs.managed}}
+        run: echo "deployManaged=$true" >> $GITHUB_ENV
+
+      - name: Update solution version
+        shell: pwsh
+        run: |
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}} -postfix ${{env.postFixText}} -managed ${{env.managed}}
+
+      - name: Pack Unmanged solution
+        if: ${{github.event.inputs.managed}}
+        uses: microsoft/powerplatform-actions/pack-solution@v0
+        with:
+          solution-file: "output/${{github.event.inputs.solutionName}}.zip"
+          solution-folder: "${{github.event.inputs.solutionName}}"
+          solution-type: "Unmanaged"
+          process-canvas-apps: true
