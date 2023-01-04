@@ -1,7 +1,26 @@
-name: Test flow
+name: Deploy solution from branch
 on:
   workflow_dispatch:
     inputs:
+      solutionName:
+        description: Name of the Power Platform solution
+        required: true
+        default: BcSampleAppsSolution
+      environment:
+        type: text
+        description: The environment to deploy to
+        default: QA
+        required: true
+      version:
+        description: Tag of this release (needs to be semantic version string https://semver.org, ex. 1.0)
+        required: true
+        default: "1.4"
+        type: text
+      postFix:
+        description: Postfix the solution name with 'dev'
+        required: true
+        default: true
+        type: boolean
       managed:
         description: Deploy the solution as a managed solution
         required: true
@@ -16,16 +35,20 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v3
 
+      - name: Set Postfix envvariable
+        if: ${{github.event.inputs.postFix}}
+        run: echo "postFixText=dev" >> $GITHUB_ENV
+
       - name: Set managed envVariable
         if: ${{github.event.inputs.managed}}
-        run: echo "deployManaged=$true" >> $GITHUB_ENV
+        run: echo "deployManaged=true" >> $GITHUB_ENV
 
       - name: Update solution version
         shell: pwsh
         run: |
           .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}} -postfix ${{env.postFixText}} -managed ${{env.managed}}
 
-      - name: Pack Unmanged solution
+      - name: Pack Unmanged olution
         if: ${{github.event.inputs.managed}}
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
@@ -33,3 +56,34 @@ jobs:
           solution-folder: "${{github.event.inputs.solutionName}}"
           solution-type: "Unmanaged"
           process-canvas-apps: true
+
+      - name: Pack managed solution
+        uses: microsoft/powerplatform-actions/pack-solution@v0
+        with:
+          solution-file: "output/${{github.event.inputs.solutionName}}.zip"
+          solution-folder: "${{github.event.inputs.solutionName}}"
+          solution-type: "Unmanaged"
+          process-canvas-apps: true
+
+      - name: Who am I
+        uses: microsoft/powerplatform-actions/who-am-i@v0
+        with:
+          user-name: ${{secrets.PowerUser}}
+          password-secret: ${{secrets.PowerPassword}}
+          environment-url: ${{secrets.PowerEnv}}
+
+      - name: Publish solution to Power Platform
+        uses: microsoft/powerplatform-actions/import-solution@v0
+        with:
+          user-name: ${{secrets.PowerUser}}
+          password-secret: ${{secrets.PowerPassword}}
+          environment-url: ${{secrets.PowerEnv}}
+          solution-file: output/${{github.event.inputs.solutionName}}.zip
+          force-overwrite: true
+          publish-changes: true
+
+      - name: Upload solution as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{github.event.inputs.solutionName}}
+          path: output/${{github.event.inputs.solutionName}}.zip
