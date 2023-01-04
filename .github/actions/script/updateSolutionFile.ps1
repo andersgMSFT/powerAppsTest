@@ -5,7 +5,9 @@ param(
     [Parameter(Position = 1, mandatory = $false)]
     [string] $version,
     [Parameter(Position = 2, mandatory = $false)]
-    [string] $postFix
+    [string] $postFix,
+    [Parameter(Position = 3, mandatory = $false)]
+    [string] $managed
 )
 
 $xmlFile = (Get-ChildItem $solutionPath);
@@ -33,6 +35,17 @@ if ($xmlFile.Exists) {
             Write-Host "Updating solution name: "$newName;
             $nodeWithName.'#text' = $newName;    
         }
+    }
+
+    if ($managed) {
+        $nodeWithName = $xml.SelectSingleNode("//Managed");
+        Write-Host "Updating managed flag: 1";
+        $nodeWithName.'#text' = "1";    
+    }
+    else {
+        $nodeWithName = $xml.SelectSingleNode("//Managed");
+        Write-Host "Updating managed flag: 0";
+        $nodeWithName.'#text' = "0";  
     }
 
     $xml.Save($xmlFile.FullName);
