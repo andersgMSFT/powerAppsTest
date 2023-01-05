@@ -7,7 +7,7 @@ param(
     [Parameter(Position = 2, mandatory = $false)]
     [string] $postFix,
     [Parameter(Position = 3, mandatory = $false)]
-    [bool] $managed
+    [string] $managed
 )
 
 $xmlFile = (Get-ChildItem $solutionPath);
@@ -37,7 +37,7 @@ if ($xmlFile.Exists) {
         }
     }
 
-    if ($managed) {
+    if ($managed -eq 'true') {
         $nodeWithName = $xml.SelectSingleNode("//Managed");
         Write-Host "Updating managed flag: 1";
         $nodeWithName.'#text' = "1";    

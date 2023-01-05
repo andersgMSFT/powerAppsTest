@@ -13,7 +13,6 @@ on:
         type: boolean
 
 env:
-  deployManaged: "$${{github.event.inputs.managed}}""
   packageType: "Unmanaged"
 
 jobs:
@@ -27,7 +26,7 @@ jobs:
       - name: Update solution version
         shell: pwsh
         run: |
-          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -managed ${{env.deployManaged}}
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -managed ${{github.event.inputs.managed}}
 
       - name: Set managed envVariable
         if: github.event.inputs.managed == 'true'
