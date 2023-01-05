@@ -1,4 +1,4 @@
-name: Test flow
+name: Test flow2
 on:
   workflow_dispatch:
     inputs:
