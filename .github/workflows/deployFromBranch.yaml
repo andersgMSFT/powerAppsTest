@@ -1,4 +1,4 @@
-name: Test flow2
+name: Deploy solution from branch
 on:
   workflow_dispatch:
     inputs:
