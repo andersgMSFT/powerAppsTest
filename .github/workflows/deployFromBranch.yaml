@@ -16,15 +16,15 @@ on:
         required: true
         default: "1.4"
         type: text
-      managed:
-        description: Deploy the solution as a managed solution
-        required: true
-        default: false
-        type: boolean
       postFix:
         description: Postfix the solution
         required: true
         default: true
+        type: boolean
+      managed:
+        description: Deploy the solution as a managed solution
+        required: true
+        default: false
         type: boolean
 
 env:
