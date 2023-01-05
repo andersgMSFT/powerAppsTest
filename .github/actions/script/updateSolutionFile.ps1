@@ -21,7 +21,7 @@ if ($xmlFile.Exists) {
         $node.'#text' = $version;
     }
 
-    if ($postFix) {
+    if ($postFix == 'true') {
         $nodeWithName = $xml.SelectSingleNode("//UniqueName");
         $newName = $nodeWithName.'#text' + "__" + $postFix;
         Write-Host "Updating solution name: "$newName;
