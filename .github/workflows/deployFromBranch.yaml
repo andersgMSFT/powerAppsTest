@@ -29,6 +29,7 @@ on:
 
 env:
   solutionType: "Unmanaged"
+  postFixText: ""
 
 jobs:
   build-and-deploy:
