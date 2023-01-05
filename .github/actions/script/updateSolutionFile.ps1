@@ -22,7 +22,7 @@ if ($xmlFile.Exists) {
     }
 
     # Work around for handling empty value in work flow
-    if ($postFix -eq " ") {
+    if ($postFix -eq "0") {
         $postFix = "";
     }
 
