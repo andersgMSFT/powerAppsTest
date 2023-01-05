@@ -21,7 +21,7 @@ if ($xmlFile.Exists) {
         $node.'#text' = $version;
     }
 
-    if ($postFix == 'true') {
+    if ($postFix -eq 'true') {
         $nodeWithName = $xml.SelectSingleNode("//UniqueName");
         $newName = $nodeWithName.'#text' + "__" + $postFix;
         Write-Host "Updating solution name: "$newName;
@@ -37,7 +37,7 @@ if ($xmlFile.Exists) {
         }
     }
 
-    if ($managed == 'true') {
+    if ($managed -eq 'true') {
         $nodeWithName = $xml.SelectSingleNode("//Managed");
         Write-Host "Updating managed flag: 1";
         $nodeWithName.'#text' = "1";    
