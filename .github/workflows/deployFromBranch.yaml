@@ -19,7 +19,7 @@ on:
       postFix:
         description: Postfix the solution name with 'dev'
         required: false
-        default: ${{github.actor}}
+        default: test
         type: text
       managed:
         description: Deploy the solution as a managed solution

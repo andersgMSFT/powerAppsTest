@@ -17,7 +17,7 @@ on:
         default: "1.4"
         type: text
       postFix:
-        description: Postfix the solution name with 'dev'
+        description: Postfix the solution
         required: true
         default: true
         type: boolean
@@ -36,7 +36,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set Postfix envvariable
-        if: ${{github.event.inputs.postFix}}
+        if: github.event.inputs.postFix == 'true'
         run: echo "postFixText=dev" >> $GITHUB_ENV
 
       - name: Set managed envVariable
