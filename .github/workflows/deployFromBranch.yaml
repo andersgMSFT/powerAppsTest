@@ -12,6 +12,10 @@ on:
         default: false
         type: boolean
 
+env:
+  deployManaged: false
+  packageType: "Unmanaged"
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -20,17 +24,13 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v3
 
-      - name: Set managed envVariable
-        if: ${{github.event.inputs.managed}}
-        run: echo "deployManaged=true" >> $GITHUB_ENV
-
       - name: Update solution version
         shell: pwsh
         run: |
-          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -managed ${{env.deployManaged}}
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -managed ${{env.managed}}
 
       - name: Set managed envVariable
-        if: ${{github.event.inputs.managed}}
+        if: github.event.inputs.managed == 'true'
         run: echo "packageType=Managed" >> $GITHUB_ENV
 
       - name: Pack Unmanged solution
