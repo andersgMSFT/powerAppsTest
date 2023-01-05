@@ -21,7 +21,7 @@ if ($xmlFile.Exists) {
         $node.'#text' = $version;
     }
 
-    if ($postFix -eq 'true') {
+    if ($postFix) {
         $nodeWithName = $xml.SelectSingleNode("//UniqueName");
         $newName = $nodeWithName.'#text' + "__" + $postFix;
         Write-Host "Updating solution name: "$newName;
@@ -53,4 +53,3 @@ if ($xmlFile.Exists) {
 else {
     Write-Error "Could not find file: " + $solutionPath;
 }
-
