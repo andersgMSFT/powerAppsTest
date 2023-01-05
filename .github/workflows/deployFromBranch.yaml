@@ -47,6 +47,11 @@ jobs:
         run: |
           .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}} -postfix ${{env.postFixText}} -managed ${{github.event.inputs.managed}}
 
+     - name: Update solution PowerApps
+        shell: pwsh
+        run: |
+          .github/actions/script/updatePowerAppsName.ps1 -postFix ${{env.postFixText}}
+
       - name: Set solution envVariable
         if: github.event.inputs.managed == 'true'
         run: echo "solutionType=Managed" >> $GITHUB_ENV

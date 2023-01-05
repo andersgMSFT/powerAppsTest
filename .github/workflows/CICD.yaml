@@ -19,6 +19,11 @@ jobs:
         shell: pwsh
         run: |
           .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{env.solutionName}}/Other/Solution.xml -version ${{env.version}} -postFix ${{env.postFix}}
+
+     - name: Update solution PowerApps
+        shell: pwsh
+        run: |
+          .github/actions/script/updatePowerAppsName.ps1 -postFix ${{env.postFix}}
       
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
