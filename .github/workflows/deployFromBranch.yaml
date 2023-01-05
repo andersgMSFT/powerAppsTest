@@ -13,7 +13,7 @@ on:
         type: boolean
 
 env:
-  deployManaged: ${{github.event.inputs.managed == 'true'}}
+  deployManaged: $${{github.event.inputs.managed}}
   packageType: "Unmanaged"
 
 jobs:
