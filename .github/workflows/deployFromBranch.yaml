@@ -9,7 +9,7 @@ on:
       environment:
         type: text
         description: The environment to deploy to
-        default: QA
+        default: CDX
         required: true
       version:
         description: Tag of this release (needs to be semantic version string https://semver.org, ex. 1.0)
