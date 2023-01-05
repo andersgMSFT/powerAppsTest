@@ -65,4 +65,9 @@ function updateAllPowerApps {
     }
 }
 
+# Work around to calling the parameter with empty string from work flow
+if ($postFix -eq "0") {
+    $postFix = "";
+}
+
 updateAllPowerApps;
