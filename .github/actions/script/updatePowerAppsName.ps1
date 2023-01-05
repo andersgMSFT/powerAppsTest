@@ -19,7 +19,6 @@ function updateAllFiles {
             Write-Host $file.FullName" --> updated ";
         }
     }
-
 }
 
 function updateAllPowerApps {
