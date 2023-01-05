@@ -37,7 +37,7 @@ if ($xmlFile.Exists) {
         }
     }
 
-    if ($managed) {
+    if ($managed == 'true') {
         $nodeWithName = $xml.SelectSingleNode("//Managed");
         Write-Host "Updating managed flag: 1";
         $nodeWithName.'#text' = "1";    
