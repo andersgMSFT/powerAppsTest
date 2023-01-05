@@ -21,6 +21,11 @@ if ($xmlFile.Exists) {
         $node.'#text' = $version;
     }
 
+    # Work around for handling empty value in work flow
+    if ($postFix -eq " ") {
+        $postFix = "";
+    }
+
     if ($postFix) {
         $nodeWithName = $xml.SelectSingleNode("//UniqueName");
         $newName = $nodeWithName.'#text' + "__" + $postFix;
