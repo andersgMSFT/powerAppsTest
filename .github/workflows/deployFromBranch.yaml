@@ -23,9 +23,9 @@ on:
         type: boolean
       postFix:
         description: Postfix the solution
-        required: false
-        default: test
-        type: text
+        required: true
+        default: true
+        type: boolean
 
 env:
   solutionType: "Unmanaged"
@@ -38,10 +38,14 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v3
 
+      - name: Set Postfix envvariable
+        if: github.event.inputs.postFix == 'true'
+        run: echo "postFixText=${{github.actor}}" >> $GITHUB_ENV
+
       - name: Update solution version
         shell: pwsh
         run: |
-          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}} -postfix ${{github.event.inputs.postFix}} -managed ${{github.event.inputs.managed}}
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}} -postfix ${{env.postFixText}} -managed ${{github.event.inputs.managed}}
 
       - name: Set solution envVariable
         if: github.event.inputs.managed == 'true'
