@@ -18,7 +18,8 @@ function getCurrentSettings {
         if ($connectionsfile.Exists) {
             try {
                 $jsonFile = Get-Content $connectionsfile.FullName | ConvertFrom-Json;
-                $currentEnvironmentAndCompany = ($jsonFile.$connectorId.datasets | Get-Member -MemberType NoteProperty).Name   
+                $currentEnvironmentAndCompany = ($jsonFile.$connectorId.datasets | Get-Member -MemberType NoteProperty).Name;
+                #NOTE: We assume all have the same BC connection, so we just return the first one.
                 return $currentEnvironmentAndCompany; 
             }
             catch {

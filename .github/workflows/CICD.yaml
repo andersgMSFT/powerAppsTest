@@ -5,7 +5,7 @@ on:
 env:
   version: 99.9.${{github.run_number}}
   solutionName: "BcSampleAppsSolution"
-  postFix: CICD
+  postFix: 0
 
 jobs:
   build-and-deploy:
@@ -19,6 +19,11 @@ jobs:
         shell: pwsh
         run: |
           .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{env.solutionName}}/Other/Solution.xml -version ${{env.version}} -postFix ${{env.postFix}}
+
+      - name: Update BC connection
+        shell: pwsh
+        run: |
+          .github/actions/script/updateEnvironmentAndCompany.ps1 -companyId ${{secret.companyId}} -environmentName ${{secret.environmentName}}
 
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0

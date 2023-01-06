@@ -16,11 +16,6 @@ on:
         required: true
         default: "1.4"
         type: text
-      postFix:
-        description: Postfix the solution
-        required: true
-        default: true
-        type: boolean
       managed:
         description: Deploy as managed solution
         required: true
@@ -47,6 +42,11 @@ jobs:
         shell: pwsh
         run: |
           .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}} -postfix ${{env.postFixText}} -managed ${{github.event.inputs.managed}}
+
+      - name: Update BC connection
+        shell: pwsh
+        run: |
+          .github/actions/script/updateEnvironmentAndCompany.ps1 -companyId ${{secret.companyId}} -environmentName ${{secret.environmentName}}
 
       - name: Set solution envVariable
         if: github.event.inputs.managed == 'true'
