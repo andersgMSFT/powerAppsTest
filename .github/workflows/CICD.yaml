@@ -29,7 +29,7 @@ jobs:
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
           solution-file: forgetMe.zip
-          solution-folder: ${{github.event.inputs.solutionName}}
+          solution-folder: ${{env.solutionName}}
           solution-type: ${{env.solutionType}}
           process-canvas-apps: true
     
