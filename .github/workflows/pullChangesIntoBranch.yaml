@@ -11,10 +11,6 @@ on:
         type: text
         description: The name of the solution
         default: BcSampleAppsSolution
-      postFix:
-        type: boolean
-        description: Search for a solution postfixed with your username
-        default: true
 
 jobs:
   get-changes:

@@ -15,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Update solution version
+      - name: Update solution settings
         shell: pwsh
         run: |
           .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{env.solutionName}}/Other/Solution.xml -version ${{env.version}} -postFix ${{env.postFix}}
@@ -23,8 +23,16 @@ jobs:
       - name: Update BC connection
         shell: pwsh
         run: |
-          .github/actions/script/updateEnvironmentAndCompany.ps1 -companyId ${{secret.companyId}} -environmentName ${{secret.environmentName}}
+          .github/actions/script/updateEnvironmentAndCompany.ps1 -companyId ${{secrets.bcCompanyId}} -environmentName ${{secrets.bcEnvironmentName}}
 
+      - name: Test Pack (Not real - just workaround bug)
+        uses: microsoft/powerplatform-actions/pack-solution@v0
+        with:
+          solution-file: forgetMe.zip
+          solution-folder: ${{github.event.inputs.solutionName}}
+          solution-type: ${{env.solutionType}}
+          process-canvas-apps: true
+    
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:

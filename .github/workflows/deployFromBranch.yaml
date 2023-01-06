@@ -38,7 +38,11 @@ jobs:
         if: github.event.inputs.postFix == 'true'
         run: echo "postFixText=${{github.actor}}" >> $GITHUB_ENV
 
-      - name: Update solution version
+      - name: Set solution envVariable
+        if: github.event.inputs.managed == 'true'
+        run: echo "solutionType=Managed" >> $GITHUB_ENV
+
+      - name: Update solution settings
         shell: pwsh
         run: |
           .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}} -postfix ${{env.postFixText}} -managed ${{github.event.inputs.managed}}
@@ -48,21 +52,15 @@ jobs:
         run: |
           .github/actions/script/updateEnvironmentAndCompany.ps1 -companyId ${{secrets.bcCompanyId}} -environmentName ${{secrets.bcEnvironmentName}}
 
-      - name: Set solution envVariable
-        if: github.event.inputs.managed == 'true'
-        run: echo "solutionType=Managed" >> $GITHUB_ENV
-
-      - name: Pack solution (Not real run - just workaround for issue)
-        if: ${{github.event.inputs.managed}}
+      - name: Test Pack solution(Not real - just workaround bug)
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
-          solution-file: forgotme.zip
+          solution-file: forgetMe.zip
           solution-folder: ${{github.event.inputs.solutionName}}
           solution-type: ${{env.solutionType}}
           process-canvas-apps: true
 
       - name: Pack solution
-        if: ${{github.event.inputs.managed}}
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
           solution-file: output/${{github.event.inputs.solutionName}}.zip
