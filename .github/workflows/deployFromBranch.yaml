@@ -52,6 +52,15 @@ jobs:
         if: github.event.inputs.managed == 'true'
         run: echo "solutionType=Managed" >> $GITHUB_ENV
 
+      - name: Pack solution (Not real run - just workaround for issue)
+        if: ${{github.event.inputs.managed}}
+        uses: microsoft/powerplatform-actions/pack-solution@v0
+        with:
+          solution-file: forgotme.zip
+          solution-folder: ${{github.event.inputs.solutionName}}
+          solution-type: ${{env.solutionType}}
+          process-canvas-apps: true
+
       - name: Pack solution
         if: ${{github.event.inputs.managed}}
         uses: microsoft/powerplatform-actions/pack-solution@v0

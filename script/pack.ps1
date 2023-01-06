@@ -11,7 +11,8 @@ process {
     write-host "Packing your Power App solution";
     write-host "******************************************";
 
-    pac solution pack -pca -c -aw -ad -z $zipPath -f $solutionPath;
+    # pac solution pack -pca -c -aw -ad -z $zipPath -f $solutionPath;
+    pac solution pack -pca -z $zipPath -f $solutionPath;
 
     write-host "done";
 }
