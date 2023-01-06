@@ -5,7 +5,9 @@ param(
     [Parameter(Position = 1, mandatory = $false)]
     [string] $version,
     [Parameter(Position = 2, mandatory = $false)]
-    [string] $postFix
+    [string] $postFix,
+    [Parameter(Position = 3, mandatory = $false)]
+    [string] $managed
 )
 
 $xmlFile = (Get-ChildItem $solutionPath);
@@ -17,6 +19,11 @@ if ($xmlFile.Exists) {
         $node = $xml.SelectSingleNode("//Version");
         Write-Host "Updating version: "$version;
         $node.'#text' = $version;
+    }
+
+    # Work around for handling empty value in work flow
+    if ($postFix -eq "0") {
+        $postFix = "";
     }
 
     if ($postFix) {
@@ -35,9 +42,19 @@ if ($xmlFile.Exists) {
         }
     }
 
+    if ($managed -eq 'true') {
+        $nodeWithName = $xml.SelectSingleNode("//Managed");
+        Write-Host "Updating managed flag: 1";
+        $nodeWithName.'#text' = "1";    
+    }
+    else {
+        $nodeWithName = $xml.SelectSingleNode("//Managed");
+        Write-Host "Updating managed flag: 0";
+        $nodeWithName.'#text' = "0";  
+    }
+
     $xml.Save($xmlFile.FullName);
 }
 else {
     Write-Error "Could not find file: " + $solutionPath;
 }
-

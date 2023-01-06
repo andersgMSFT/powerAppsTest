@@ -2,17 +2,16 @@
 [CmdletBinding()]
 param(
     [Parameter(Position = 0, mandatory = $true)]
-    [string] $zipPath,
+    [string] $msAppPath,
     [Parameter(Position = 1, mandatory = $true)]
-    [string] $solutionPath)
+    [string] $appSourcePath)
 
 process {
     write-host "******************************************";
-    write-host "Packing your Power App solution";
+    write-host "Unpacking your Power App to msApp file";
     write-host "******************************************";
 
-    # pac solution pack -pca -c -aw -ad -z $zipPath -f $solutionPath;
-    pac solution pack -pca -z $zipPath -f $solutionPath;
+    pac canvas unpack --msApp $msAppPath --sources $appSourcePath
 
     write-host "done";
 }
