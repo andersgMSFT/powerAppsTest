@@ -22,7 +22,7 @@ on:
         default: true
         type: boolean
       managed:
-        description: Deploy the solution as a managed solution
+        description: Deploy the solution managed
         required: true
         default: false
         type: boolean

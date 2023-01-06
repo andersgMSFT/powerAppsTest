@@ -1,4 +1,5 @@
-﻿function updateAllFileAndFolderNames {
+﻿# NOTE: Still work in progress 
+function updateAllFileAndFolderNames {
     param(
         [Parameter(Position = 0, mandatory = $true)] [string] $rootFolder,
         [Parameter(Position = 0, mandatory = $true)] [string] $oldValue,
@@ -98,13 +99,14 @@ function getPowerAppDisplayName {
     }
 }
 
+
 $powerApps = getPowerAppsInSolution -solutionPath .\BcSampleAppsSolution;
 foreach ($powerApp in $powerApps) {
     $powerAppName = $powerApp.Attributes[1].'#text';
     $powerAppDisplayName = getPowerAppDisplayName -sourcePath .\BcSampleAppsSolution\CanvasApps\src\$powerAppName;
 
     Write-Host "Updating App: " $powerAppName " (" $powerAppDisplayName")";    
-    updateAllFileAndFolderNames -rootFolder .\BcSampleAppsSolution -oldValue $powerAppName -newValue AndersTestApp;
-    updateAllFileContent -rootFolder .\BcSampleAppsSolution -oldDisplayName $powerAppDisplayName -newDisplayName AndersTestDisplay -oldAppName $powerAppName -newAppName AndersTestApp;
+    updateAllFileAndFolderNames -rootFolder .\BcSampleAppsSolution -oldValue $powerAppName -newValue new_bcwarehousehelperdev_290e3;
+    updateAllFileContent -rootFolder .\BcSampleAppsSolution -oldDisplayName $powerAppDisplayName -newDisplayName "BC Warehouse Helper" -oldAppName $powerAppName -newAppName new_bcwarehousehelperdev_290e3;
 
 }
