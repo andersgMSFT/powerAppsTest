@@ -46,7 +46,7 @@ jobs:
       - name: Update BC connection
         shell: pwsh
         run: |
-          .github/actions/script/updateEnvironmentAndCompany.ps1 -companyId ${{secrets.companyId}} -environmentName ${{secrets.environmentName}}
+          .github/actions/script/updateEnvironmentAndCompany.ps1 -companyId ${{secrets.bcCompanyId}} -environmentName ${{secrets.bcEnvironmentName}}
 
       - name: Set solution envVariable
         if: github.event.inputs.managed == 'true'
