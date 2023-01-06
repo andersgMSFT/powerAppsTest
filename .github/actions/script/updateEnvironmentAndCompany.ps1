@@ -72,9 +72,3 @@ Write-Host "Current settings: "$currentSettings;
 Write-Host "New settings: "$newSettings;
 
 replaceOldSettings -oldSetting $currentSettings -newSetting $newSettings -rootFolder .;
-
-rm .\BcSampleAppsSolution\CanvasApps\new_bcwarehousehelper_290e3_DocumentUri.msapp
-
-pac canvas pack --msApp .\BcSampleAppsSolution\CanvasApps\new_bcwarehousehelper_290e3_DocumentUri.msapp --sources .\BcSampleAppsSolution\CanvasApps\src\new_bcwarehousehelper_290e3
-
-
