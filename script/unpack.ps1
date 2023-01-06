@@ -11,7 +11,7 @@ process {
     write-host "Unpacking your Power App solution";
     write-host "******************************************";
 
-    pac solution unpack -z $zipPath -f $solutionPath -pca;
+    pac solution unpack  -pca -c -aw -ad  -z $zipPath -f $solutionPath;
 
     write-host "done";
 }
