@@ -1,0 +1,92 @@
+name: Deploy solution release
+on:
+  workflow_dispatch:
+    inputs:
+      solutionName:
+        description: Name of the Power Platform solution
+        required: true
+        default: BcSampleAppsSolution
+      environment:
+        type: text
+        description: The environment to deploy to
+        default: CDX
+        required: true
+      version:
+        description: Tag of this release (needs to be semantic version string https://semver.org, ex. 1.0)
+        required: true
+        default: "1.4"
+        type: text
+      managed:
+        description: Deploy as managed solution
+        required: true
+        default: false
+        type: boolean
+
+env:
+  solutionType: "Unmanaged"
+  postFixText: "0"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: ${{github.event.inputs.environment}}
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+
+      - name: Set Postfix envvariable
+        if: github.event.inputs.postFix == 'true'
+        run: echo "postFixText=${{github.actor}}" >> $GITHUB_ENV
+
+      - name: Set solution envVariable
+        if: github.event.inputs.managed == 'true'
+        run: echo "solutionType=Managed" >> $GITHUB_ENV
+
+      - name: Update solution settings
+        shell: pwsh
+        run: |
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}} -postfix ${{env.postFixText}} -managed ${{github.event.inputs.managed}}
+
+      - name: Update BC connection
+        shell: pwsh
+        run: |
+          .github/actions/script/updateEnvironmentAndCompany.ps1 -companyId ${{secrets.bcCompanyId}} -environmentName ${{secrets.bcEnvironmentName}}
+
+      - name: Test Pack solution(Not real - just workaround bug)
+        uses: microsoft/powerplatform-actions/pack-solution@v0
+        with:
+          solution-file: forgetMe.zip
+          solution-folder: ${{github.event.inputs.solutionName}}
+          solution-type: ${{env.solutionType}}
+          process-canvas-apps: true
+
+      - name: Pack solution
+        uses: microsoft/powerplatform-actions/pack-solution@v0
+        with:
+          solution-file: output/${{github.event.inputs.solutionName}}.zip
+          solution-folder: ${{github.event.inputs.solutionName}}
+          solution-type: ${{env.solutionType}}
+          process-canvas-apps: true
+
+      - name: Who am I
+        uses: microsoft/powerplatform-actions/who-am-i@v0
+        with:
+          user-name: ${{secrets.PowerUser}}
+          password-secret: ${{secrets.PowerPassword}}
+          environment-url: ${{secrets.PowerEnv}}
+
+      - name: Publish solution to Power Platform
+        uses: microsoft/powerplatform-actions/import-solution@v0
+        with:
+          user-name: ${{secrets.PowerUser}}
+          password-secret: ${{secrets.PowerPassword}}
+          environment-url: ${{secrets.PowerEnv}}
+          solution-file: output/${{github.event.inputs.solutionName}}.zip
+          force-overwrite: true
+          publish-changes: true
+
+      - name: Publish solution artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{github.event.inputs.solutionName}}
+          path: output/${{github.event.inputs.solutionName}}.zip
