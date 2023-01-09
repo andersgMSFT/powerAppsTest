@@ -33,7 +33,310 @@
 
     Icon3 As icon.Bell:
         Icon: =Icon.DetailList
-        X: =297
-        Y: =832
+        X: =68
+        Y: =240
         ZIndex: =2
+
+    Button1 As button:
+        Height: =70
+        Size: =24
+        Text: ="Button"
+        Width: =280
+        X: =219
+        Y: =234
+        ZIndex: =3
+
+    DataTable1 As dataTable.datatable:
+        BorderStyle: =BorderStyle.Solid
+        DisplayMode: =DisplayMode.Edit
+        Fill: =RGBA(0, 0, 0, 0)
+        HeadingSize: =21
+        Height: =751
+        Items: ='items (v2.0)'
+        Size: =21
+        Width: =640
+        X: =0
+        Y: =385
+        ZIndex: =4
+
+        id_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="id"
+            FieldName: ="id"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =1
+            Text: =ThisItem.id
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =7
+
+        number_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="number"
+            FieldName: ="number"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =2
+            Text: =ThisItem.number
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =8
+
+        displayName_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="displayName"
+            FieldName: ="displayName"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =3
+            Text: =ThisItem.displayName
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =9
+
+        type_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="type"
+            FieldName: ="type"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =4
+            Text: =ThisItem.type
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =10
+
+        itemCategoryId_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="itemCategoryId"
+            FieldName: ="itemCategoryId"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =5
+            Text: =ThisItem.itemCategoryId
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =11
+
+        itemCategoryCode_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="itemCategoryCode"
+            FieldName: ="itemCategoryCode"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =6
+            Text: =ThisItem.itemCategoryCode
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =12
+
+        blocked_Column1 As dataTableColumn.booleanColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="blocked"
+            FieldName: ="blocked"
+            FieldVariantName: ="booleanColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =7
+            Text: =ThisItem.blocked
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =13
+
+        gtin_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="gtin"
+            FieldName: ="gtin"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =8
+            Text: =ThisItem.gtin
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =14
+
+        inventory_Column1 As dataTableColumn.numberColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="inventory"
+            FieldName: ="inventory"
+            FieldVariantName: ="numberColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =9
+            Text: =ThisItem.inventory
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =15
+
+        unitPrice_Column1 As dataTableColumn.numberColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="unitPrice"
+            FieldName: ="unitPrice"
+            FieldVariantName: ="numberColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =10
+            Text: =ThisItem.unitPrice
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =16
+
+        priceIncludesTax_Column1 As dataTableColumn.booleanColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="priceIncludesTax"
+            FieldName: ="priceIncludesTax"
+            FieldVariantName: ="booleanColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =11
+            Text: =ThisItem.priceIncludesTax
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =17
+
+        unitCost_Column1 As dataTableColumn.numberColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="unitCost"
+            FieldName: ="unitCost"
+            FieldVariantName: ="numberColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =12
+            Text: =ThisItem.unitCost
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =18
+
+        taxGroupId_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="taxGroupId"
+            FieldName: ="taxGroupId"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =13
+            Text: =ThisItem.taxGroupId
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =19
+
+        taxGroupCode_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="taxGroupCode"
+            FieldName: ="taxGroupCode"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =14
+            Text: =ThisItem.taxGroupCode
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =20
+
+        baseUnitOfMeasureId_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="baseUnitOfMeasureId"
+            FieldName: ="baseUnitOfMeasureId"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =15
+            Text: =ThisItem.baseUnitOfMeasureId
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =21
+
+        baseUnitOfMeasureCode_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="baseUnitOfMeasureCode"
+            FieldName: ="baseUnitOfMeasureCode"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =16
+            Text: =ThisItem.baseUnitOfMeasureCode
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =22
+
+        generalProductPostingGroupId_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="generalProductPostingGroupId"
+            FieldName: ="generalProductPostingGroupId"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =17
+            Text: =ThisItem.generalProductPostingGroupId
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =23
+
+        generalProductPostingGroupCode_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="generalProductPostingGroupCode"
+            FieldName: ="generalProductPostingGroupCode"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =18
+            Text: =ThisItem.generalProductPostingGroupCode
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =24
+
+        inventoryPostingGroupId_Column1 As dataTableColumn.textualColumn:
+            AutoWidth: =false
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="inventoryPostingGroupId"
+            FieldName: ="inventoryPostingGroupId"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =19
+            Text: =ThisItem.inventoryPostingGroupId
+            Width: =368
+            X: =480
+            Y: =0
+            ZIndex: =25
+
+        inventoryPostingGroupCode_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="inventoryPostingGroupCode"
+            FieldName: ="inventoryPostingGroupCode"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =20
+            Text: =ThisItem.inventoryPostingGroupCode
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =26
 
