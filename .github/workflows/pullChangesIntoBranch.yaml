@@ -1,4 +1,4 @@
-name: Get latest solution changes
+name: Get latest PowerPlatform changes
 
 on:
   workflow_dispatch:
@@ -65,11 +65,6 @@ jobs:
         shell: pwsh
         run: |
           .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml
-
-      - name: Remove possible postfix from solution PowerApps
-        shell: pwsh
-        run: |
-          .github/actions/script/updatePowerAppsName.ps1 -postFix ${{env.postFix}}
 
       - name: Commit changes (if there are any)
         shell: pwsh

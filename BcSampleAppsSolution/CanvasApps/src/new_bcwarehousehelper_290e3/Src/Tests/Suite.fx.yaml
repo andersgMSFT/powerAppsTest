@@ -6,32 +6,3 @@
         Description: ="First test"
         DisplayName: ="Case"
 
-        Step1 As TestStep:
-            Description: |-
-                ="Indstil 'warehouse_Dropdown'.Selected til {'Value':""Magazijn Oost""}"
-            Screen: =Scan Page
-            Value: |-
-                =SetProperty(warehouse_Dropdown.Selected, {Value:"Magazijn Oost"})
-
-        Step2 As TestStep:
-            Description: ="Vælg 'start_button'"
-            Screen: =Scan Page
-            Value: =Select(start_button)
-
-        Step3 As TestStep:
-            Description: |-
-                ="Indstil 'webonly_dropdown'.Selected til {'Value':""1900-S""}"
-            Screen: =Scan Page
-            Value: |-
-                =SetProperty(webonly_dropdown.Selected, {Value:"1900-S"})
-
-        Step4 As TestStep:
-            Description: ="Vælg 'Icon2'"
-            Screen: =Scan Page
-            Value: =Select(icnMinut)
-
-        Step5 As TestStep:
-            Description: ="Vælg 'submitForm_button'"
-            Screen: =Scan Page
-            Value: =Select(btnSubmitItem)
-

@@ -26,13 +26,13 @@
     "connectionRef": {
       "apiTier": "Premium",
       "displayName": "Dynamics 365 Business Central",
-      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1612/1.0.1612.3109/dynamicssmbsaas/icon.png",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1613/1.0.1613.3125/dynamicssmbsaas/icon.png",
       "id": "/providers/microsoft.powerapps/apis/shared_dynamicssmbsaas",
       "parameterHints": {},
       "parameterHintsV2": {}
     },
     "datasets": {
-      "PRODUCTION,84b7b4b7-135b-ed11-956e-000d3a398f21": {
+      "PRODUCTION,18bb64bd-e06c-ed11-81b5-6045bd8e591f": {
         "dataSources": {
           "items (v2.0)": {
             "tableName": "items,v2.0"
