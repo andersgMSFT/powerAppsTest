@@ -1,9 +1,21 @@
-
 Param(
     [string] $token,
     [string] $api_url = $ENV:GITHUB_API_URL,
     [string] $repository = $ENV:GITHUB_REPOSITORY
 )
+
+function GetHeader {
+    param (
+        [string] $token,
+        [string] $accept = "application/vnd.github.v3+json"
+    )
+    $headers = @{ "Accept" = $accept }
+    if (![string]::IsNullOrEmpty($token)) {
+        $headers["Authorization"] = "token $token"
+    }
+
+    return $headers
+}
 
 Write-Host "Analyzing releases $api_url/repos/$repository/releases"
 $releases = @(InvokeWebRequest -Headers (GetHeader -token $token) -Uri "$api_url/repos/$repository/releases" | ConvertFrom-Json)
