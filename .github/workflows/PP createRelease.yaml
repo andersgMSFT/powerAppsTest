@@ -44,7 +44,7 @@ jobs:
       - name: Update solution settings (unmanaged)
         shell: pwsh
         run: |
-          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}}
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath PowerPlatform/${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}}
 
       - name: Pack Solution (Unmanaged)
         uses: microsoft/powerplatform-actions/pack-solution@v0
