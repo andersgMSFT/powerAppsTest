@@ -1,6 +1,5 @@
-name: Deploy solution release
+name: PP Deploy solution release
 
-on: push
 
 env:
   solutionType: "Unmanaged"
