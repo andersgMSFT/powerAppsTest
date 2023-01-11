@@ -44,4 +44,4 @@ jobs:
           
       - name: Commit changes (if there are any)
         shell: pwsh
-        run: .github/actions/script/commitGitChanges.ps1 -solutionName ${{github.event.inputs.solutionName}} -environmentName ${{github.event.inputs.environment}}
+        run: .github/actions/script/commitGitChanges.ps1 -solutionName ${{github.event.inputs.solutionName}} -environmentName BcSampleApps
