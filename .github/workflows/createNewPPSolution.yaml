@@ -1,4 +1,4 @@
-name: Deploy solution from branch
+name: Create new PowerPlatform solution
 on:
   workflow_dispatch:
     inputs:
