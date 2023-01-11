@@ -3,5 +3,7 @@
   "templateUrl": "https://github.com/BusinessCentralDemos/AL-Go-PTE@main",
   "CICDPushBranches": [],
   "CICDPullRquestBranches": [],
-  "CDX_environmentname": "production (production)"
+  "DeployToCDX": {
+    "EnvironmentName": "Production (Production)"
+  }
 }
