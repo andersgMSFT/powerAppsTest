@@ -130,7 +130,7 @@ if ($releases.Count -gt 1) {
     catch {
         Write-Host -ForegroundColor red "Some of the release tags cannot be recognized as a semantic version string (https://semver.org)"
         Write-Host -ForegroundColor red "Using default GitHub sorting for releases"
-        $releases
+        $releases;
     }
 }
 else {
@@ -138,3 +138,7 @@ else {
 }
 
 Write-Host "Found : "$releases.Count " releases";
+
+foreach ($release in $releases) {
+    Write-Host "Release: "$release.url
+}
