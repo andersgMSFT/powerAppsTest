@@ -1,4 +1,4 @@
-name: Get latest PowerPlatform changes
+name: PP Get latest PowerPlatform changes
 
 on:
   workflow_dispatch:
