@@ -1,0 +1,96 @@
+name: PP Create release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Tag of this release (needs to be semantic version string https://semver.org, ex. 1.0)
+        required: true
+        default: "1.5"
+      environment:
+        description: Environment
+        required: true
+        default: "QA"
+      solutionName:
+        description: Name of the Power Platform solution
+        required: true
+        default: "BcSampleAppsSolution"
+      draft:
+        description: Create as draft release
+        required: true
+        type: boolean
+        default: true
+
+jobs:
+  package-and-release:
+    environment: ${{github.event.inputs.environment}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Update BC connection
+        shell: pwsh
+        run: |
+          .github/actions/script/updateEnvironmentAndCompany.ps1 -companyId ${{secrets.bcCompanyId}} -environmentName ${{secrets.bcEnvironmentName}}
+
+      - name: Test Pack solution(Not real - just workaround bug)
+        uses: microsoft/powerplatform-actions/pack-solution@v0
+        with:
+          solution-file: forgetMe.zip
+          solution-folder: ${{github.event.inputs.solutionName}}
+          solution-type: ${{env.solutionType}}
+          process-canvas-apps: true
+
+      - name: Update solution settings (unmanaged)
+        shell: pwsh
+        run: |
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}}
+
+      - name: Pack Solution (Unmanaged)
+        uses: microsoft/powerplatform-actions/pack-solution@v0
+        with:
+          solution-file: "output/${{github.event.inputs.solutionName}}.zip"
+          solution-folder: ${{github.event.inputs.solutionName}}
+          solution-type: "Unmanaged"
+          process-canvas-apps: true
+
+      - name: Update solution settings (managed)
+        shell: pwsh
+        run: |
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}} -managed true
+
+      - name: Pack Solution (Managed)
+        uses: microsoft/powerplatform-actions/pack-solution@v0
+        with:
+          solution-file: "output/${{github.event.inputs.solutionName}}_managed.zip"
+          solution-folder: ${{github.event.inputs.solutionName}}
+          solution-type: "Managed"
+          process-canvas-apps: true
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          tag_name: ${{github.event.inputs.version}}
+          release_name: ${{github.event.inputs.version}} - ${{github.event.inputs.solutionName}}(${{github.event.inputs.environment}})
+          draft: ${{github.event.inputs.draft}}
+          prerelease: false
+
+      - name: zip artifacts
+        run: zip -r solutions.zip output
+
+      - name: Check files
+        run: ls ; cd output; ls;
+
+      - name: Upload managed solution
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          upload_url: ${{steps.create_release.outputs.upload_url}}
+          asset_path: solutions.zip
+          asset_name: solutions.zip
+          asset_content_type: application/zip
