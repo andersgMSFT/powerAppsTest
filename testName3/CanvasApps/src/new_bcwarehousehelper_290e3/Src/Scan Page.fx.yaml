@@ -1,0 +1,413 @@
+"'Scan Page' As screen":
+    Fill: =RGBA(240, 240, 240, 1)
+    OnVisible: |-
+        =Set(varItemInventoryNumber, Blank());
+        Set(varItemInventoryName, Blank());
+        Set(varItemUnitOfMeasure, Blank());
+        Set(varShowUserInfo, false);
+
+    lblWelcomeText As label:
+        Align: =Align.Center
+        Font: =Font.'Segoe UI'
+        Height: =173
+        Size: =34
+        Text: ="Hi "& 'Office365-brugere'.MyProfile().DisplayName
+        Width: =560
+        X: =52
+        Y: =102
+        ZIndex: =1
+
+    lblScanPageDescription As label:
+        Align: =Align.Center
+        Font: =Font.'Segoe UI'
+        Height: =144
+        Size: =22
+        Text: ="Scan an item to see and update its inventory count "
+        Width: =560
+        X: =60
+        Y: =247
+        ZIndex: =2
+
+    BarcodeScanner As barcodeScanner:
+        BorderColor: =DarkGray
+        BorderThickness: =4
+        Color: =RGBA(0, 0, 0, 1)
+        Fill: =RGBA(0, 131, 143, 1)
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Normal
+        Height: =350
+        HoverBorderColor: =Black
+        HoverColor: =RGBA(0, 0, 0, 1)
+        HoverFill: =RGBA(0, 131, 143, 1)
+        OnScan: |-
+            =Set(varScannedItem, First(Filter('items (v2.0)', number = BarcodeScanner.Value)));
+            Set(varItemInventoryNumber, varScannedItem.inventory);
+            Set(varItemInventoryName, varScannedItem.displayName);
+            Set(varItemUnitOfMeasure, varScannedItem.baseUnitOfMeasureCode);
+            UpdateContext({ctxShowItemForm:true});
+        PressedBorderColor: =Black
+        PressedColor: =RGBA(0, 0, 0, 1)
+        PressedFill: =ColorFade(Self.Fill, 20%)
+        RadiusBottomLeft: =350
+        RadiusBottomRight: =350
+        RadiusTopLeft: =350
+        RadiusTopRight: =350
+        Size: =42
+        Text: ="Start scanning"
+        Width: =350
+        X: =157
+        Y: =592
+        ZIndex: =3
+
+    conItemCard As groupContainer:
+        Height: =1136
+        Visible: =ctxShowItemForm
+        Width: =640
+        ZIndex: =12
+
+        figOverlay As rectangle:
+            Fill: =RGBA(0, 0, 0, 0.38)
+            Height: =1136
+            Visible: =ctxShowItemForm
+            Width: =640
+            ZIndex: =1
+
+        htmlFormBackground As htmlViewer:
+            Height: =900
+            HtmlText: |-
+                ="<div style='
+                    background-color: white;
+                    border-radius: 30px;
+                    height: 880px;
+                    width: 590px;
+                '
+                </div>"
+            Width: =600
+            X: =20
+            Y: =100
+            ZIndex: =2
+
+        BarcodeScannerSmall As barcodeScanner:
+            Color: =RGBA(0, 0, 0, 1)
+            Fill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Segoe UI'
+            Height: =116
+            HoverBorderColor: =Black
+            HoverColor: =RGBA(0, 0, 0, 1)
+            HoverFill: =RGBA(255, 255, 255, 1)
+            OnScan: |-
+                =Set(varScannedItem, First(Filter('items (v2.0)', number = BarcodeScannerSmall.Value)));
+                Set(varItemInventoryNumber, varScannedItem.inventory);
+                Set(varItemInventoryName, varScannedItem.displayName);
+                Set(varItemUnitOfMeasure, varScannedItem.baseUnitOfMeasureCode);
+                UpdateContext({ctxShowItemForm:true});
+            RadiusBottomLeft: =350
+            RadiusBottomRight: =350
+            RadiusTopLeft: =350
+            RadiusTopRight: =350
+            Size: =22
+            Text: ="Scan again"
+            Visible: =ctxShowItemForm
+            Width: =270
+            X: =185
+            Y: =1000
+            ZIndex: =3
+
+        item_form As form:
+            BorderColor: =    
+            BorderStyle: =BorderStyle.None
+            BorderThickness: =4
+            DataSource: ='items (v2.0)'  
+            Fill: =Transparent
+            Height: =913
+            Item: =First(Filter('items (v2.0)', number = varScannedItem.number))
+            OnReset: =
+            Visible: =ctxShowItemForm
+            Width: =608
+            X: =25
+            Y: =100     
+            ZIndex: =4
+
+            number_DataCard1 As typedDataCard.textualEditCard:
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="number"
+                Default: =ThisItem.number
+                DisplayMode: =DisplayMode.View
+                DisplayName: =DataSourceInfo([@'items (v2.0)'],DataSourceInfo.DisplayName,"number")
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =252
+                MaxLength: =DataSourceInfo([@'items (v2.0)'], DataSourceInfo.MaxLength, "number")
+                Required: =false
+                Update: =ThisItem.number
+                Width: =608
+                X: =0
+                Y: =0
+                ZIndex: =1
+
+                DataCardKey4 As label:
+                    Align: =Align.Center
+                    Font: =Font.'Segoe UI'
+                    Height: =78
+                    Size: =40
+                    Text: =ThisItem.number
+                    Width: =207
+                    Wrap: =false
+                    X: =188
+                    Y: =99
+                    ZIndex: =1
+
+                ErrorMessage3 As label:
+                    AutoHeight: =true
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =24
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    ZIndex: =3
+
+                StarVisible3 As label:
+                    Align: =Align.Center
+                    Height: =DataCardKey4.Height
+                    Size: =21
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey4.Y
+                    ZIndex: =4
+
+                DataCardKey4_1 As label:
+                    Align: =Align.Center
+                    Font: =Font.'Segoe UI'
+                    Height: =78
+                    Size: =26
+                    Text: ="Item"
+                    Width: =248
+                    Wrap: =false
+                    X: =180
+                    ZIndex: =8
+
+            displayName_DataCard1 As typedDataCard.textualEditCard:
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="displayName"
+                Default: =ThisItem.displayName
+                DisplayMode: =DisplayMode.View
+                DisplayName: =DataSourceInfo([@'items (v2.0)'],DataSourceInfo.DisplayName,"displayName")
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =217
+                MaxLength: =DataSourceInfo([@'items (v2.0)'], DataSourceInfo.MaxLength, "displayName")
+                Required: =false
+                Update: =DataCardValue2.Text
+                Width: =608
+                X: =0
+                Y: =1
+                ZIndex: =1
+
+                DataCardKey2 As label:
+                    AutoHeight: =true
+                    Font: =Font.'Segoe UI'
+                    Height: =48
+                    Size: =21
+                    Text: ="Name"
+                    Width: =Parent.Width - 60
+                    Wrap: =false
+                    X: =30
+                    Y: =10
+                    ZIndex: =1
+
+                DataCardValue2 As text:
+                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    Default: =Parent.Default
+                    DelayOutput: =true
+                    Font: =Font.'Segoe UI'
+                    Height: =80
+                    MaxLength: =Parent.MaxLength
+                    PaddingLeft: =5
+                    RadiusBottomLeft: =10
+                    RadiusBottomRight: =10
+                    RadiusTopLeft: =10
+                    RadiusTopRight: =10
+                    Size: =24
+                    Tooltip: =Parent.DisplayName
+                    Width: =532
+                    X: =30
+                    Y: =63
+                    ZIndex: =2
+
+                ErrorMessage1 As label:
+                    AutoHeight: =true
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =24
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardValue2.Y + DataCardValue2.Height
+                    ZIndex: =3
+
+                StarVisible1 As label:
+                    Align: =Align.Center
+                    Height: =DataCardKey2.Height
+                    Size: =21
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey2.Y
+                    ZIndex: =4
+
+            inventory_DataCard1 As typedDataCard.numberEditCard:
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="inventory"
+                Default: =varItemInventoryNumber
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@'items (v2.0)'],DataSourceInfo.DisplayName,"inventory")
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =386
+                Required: =false
+                Update: =varItemInventoryNumber
+                Width: =608
+                X: =0
+                Y: =2
+                ZIndex: =1
+
+                butUpdateIntentory As button:
+                    BorderColor: =RGBA(219, 219, 219, 1)
+                    Color: =RGBA(0, 13, 75, 1)
+                    Fill: =RGBA(255, 255, 255, 1)
+                    Font: =Font.'Segoe UI'
+                    Height: =70
+                    OnSelect: |-
+                        =SubmitForm(item_form);
+                        varScannedItem.inventory = varItemInventoryNumber;
+                    RadiusBottomLeft: =30
+                    RadiusBottomRight: =30
+                    RadiusTopLeft: =30
+                    RadiusTopRight: =30
+                    Size: =24
+                    Text: ="update"
+                    Visible: =ThisItem.inventory <> varItemInventoryNumber
+                    Width: =280
+                    X: =151
+                    Y: =269
+                    ZIndex: =1
+
+                DataCardKey3 As label:
+                    AutoHeight: =true
+                    Height: =48
+                    Size: =21
+                    Text: ="Inventory"
+                    Width: =Parent.Width - 60
+                    Wrap: =false
+                    X: =30
+                    Y: =15
+                    ZIndex: =2
+
+                ErrorMessage2 As label:
+                    AutoHeight: =true
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =24
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =245
+                    ZIndex: =3
+
+                StarVisible2 As label:
+                    Align: =Align.Center
+                    Height: =DataCardKey3.Height
+                    Size: =21
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey3.Y
+                    ZIndex: =4
+
+                conItemInventory As groupContainer:
+                    Height: =190
+                    Width: =489
+                    X: =46
+                    Y: =71
+                    ZIndex: =5
+
+                    inventory_input As text:
+                        Align: =Align.Center
+                        BorderColor: =If(IsBlank(inventory_DataCard1.Error), Parent.BorderColor, Color.Red)
+                        Default: =varItemInventoryNumber  
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Segoe UI'
+                        Format: =TextFormat.Number
+                        Height: =110
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =40
+                        RadiusBottomRight: =40
+                        RadiusTopLeft: =40
+                        RadiusTopRight: =40
+                        Reset: =
+                        Size: =24
+                        Tooltip: =ThisItem.displayName
+                        Width: =409
+                        X: =48
+                        Y: =39
+                        ZIndex: =1
+
+                    icnMinut As icon.ArrowLeft:
+                        Height: =80
+                        Icon: =Icon.HorizontalLine
+                        OnSelect: =Set(varItemInventoryNumber, varItemInventoryNumber - 1)
+                        Width: =75
+                        X: =73
+                        Y: =54
+                        ZIndex: =2
+
+                    icnPlus As icon.ArrowRight:
+                        Height: =80
+                        Icon: =Icon.Add
+                        OnSelect: =Set(varItemInventoryNumber, varItemInventoryNumber + 1); 
+                        Width: =80
+                        X: =350
+                        Y: =54
+                        ZIndex: =3
+
+        icnCloseItemForm As icon.Cancel:
+            HoverFill: =Transparent
+            Icon: =Icon.Cancel
+            OnSelect: =
+            Visible: =ctxShowItemForm
+            X: =500
+            Y: =130
+            ZIndex: =5
+
+        btnCloseItemForm As button:
+            BorderThickness: =0
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =70
+            HoverFill: =Transparent
+            OnSelect: |-
+                =UpdateContext({ctxShowItemForm: false})
+            Size: =24
+            Text: =""
+            Visible: =ctxShowItemForm
+            Width: =76
+            X: =500
+            Y: =130
+            ZIndex: =6
+
