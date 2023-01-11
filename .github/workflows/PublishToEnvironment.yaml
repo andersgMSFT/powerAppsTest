@@ -171,7 +171,7 @@ jobs:
   Deploy-PowerPlatform:
     needs: [ Deploy ]
     runs-on: ubuntu-latest
-    environment: ${{github.event.inputs.environment}}
+    environment: ${{github.event.inputs.environmentName}}
     env:
       solutionName: BcSampleAppsSolution
       version: 2.0.0
