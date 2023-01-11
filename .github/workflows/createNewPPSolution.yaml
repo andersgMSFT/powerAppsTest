@@ -1,0 +1,23 @@
+name: Deploy solution from branch
+on:
+  workflow_dispatch:
+    inputs:
+      solutionName:
+        description: Name of the Power Platform solution
+        required: true
+        default: BcSampleAppsSolution
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: ${{github.event.inputs.environment}}
+    steps:
+      - name: Download files
+        uses: robinraju/release-downloader@v1.7
+          with:
+            repository: "andersgMSFT/bcSampleAppsTest"
+            latest: true
+            fileName: "BcSampleAppsSolution_0.0.0.1.zip"
+            
+      - name: Check files
+        run: ls;
