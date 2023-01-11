@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
     inputs:
       solutionName:
-        description: Name of the Power Platform solution
+        description: Name of the new Power Platform solution
         required: true
-        default: BcSampleAppsSolution
+        default: testName
 
 jobs:
   build-and-deploy:
@@ -21,3 +21,24 @@ jobs:
             
       - name: Check files
         run: ls;
+
+      - name: unpack-solution action
+        uses: microsoft/powerplatform-actions/unpack-solution@v0
+        with:
+          solution-file: BcSampleAppsSolution_0.0.0.1.zip
+          solution-folder: ${{github.event.inputs.solutionName}}
+          solution-type: "Unmanaged"
+          overwrite-files: true
+          process-canvas-apps: true
+
+      - name: Remove zip file
+        run: rm BcSampleAppsSolution_0.0.0.1.zip
+
+      - name: Remove possible postfix from solution file
+        shell: pwsh
+        run: |
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml
+          
+      - name: Commit changes (if there are any)
+        shell: pwsh
+        run: .github/actions/script/commitGitChanges.ps1 -solutionName ${{github.event.inputs.solutionName}} -environmentName ${{github.event.inputs.environment}}
