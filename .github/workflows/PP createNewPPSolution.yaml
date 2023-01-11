@@ -1,4 +1,4 @@
-name: Create new PowerPlatform solution
+name: PP Create new PowerPlatform solution
 on:
   workflow_dispatch:
     inputs:
