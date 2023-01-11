@@ -14,10 +14,10 @@ jobs:
     steps:
       - name: Download files
         uses: robinraju/release-downloader@v1.7
-          with:
-            repository: "andersgMSFT/bcSampleAppsTest"
-            latest: true
-            fileName: "BcSampleAppsSolution_0.0.0.1.zip"
+        with:
+          repository: "andersgMSFT/bcSampleAppsTest"
+          latest: true
+          fileName: "BcSampleAppsSolution_0.0.0.1.zip"
             
       - name: Check files
         run: ls;
