@@ -6,10 +6,11 @@ on:
       appVersion:
         description: App version to deploy to environment(s) (current, prerelease, draft, latest or version number)
         required: false
-        default: 'current'
+        default: 'latest'
       environmentName:
         description: Environment mask to receive the new version (* for all, PROD* for all environments starting with PROD)
         required: true
+        default: CDX
 
 permissions:
   contents: read
