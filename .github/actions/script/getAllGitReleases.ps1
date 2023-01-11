@@ -140,5 +140,5 @@ else {
 Write-Host "Found : "$releases.Count " releases";
 
 foreach ($release in $releases) {
-    Write-Host "Release: "$release.url
+    Write-Host "Release: "$release.url " " $release.tag_name
 }
