@@ -1,10 +1,7 @@
 name: 'Pull Request Handler'
 
 on:
-  pull_request_target:
-    paths-ignore:
-      - '**.md'
-    branches: [ ]
+  workflow_dispatch:
 
 defaults:
   run:
