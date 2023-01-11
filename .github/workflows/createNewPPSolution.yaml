@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{github.event.inputs.environment}}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
       - name: Download files
         uses: robinraju/release-downloader@v1.7
         with:
