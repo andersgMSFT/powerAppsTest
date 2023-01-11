@@ -136,3 +136,5 @@ if ($releases.Count -gt 1) {
 else {
     $releases
 }
+
+Write-Host "Found : "$releases.Count " releases";
