@@ -5,7 +5,7 @@ on:
       solutionName:
         description: Name of the new Power Platform solution
         required: true
-        default: testName
+        default: BcSampleAppsSolution
       AddSampleApps:
         description: Add Bc sample apps to the new solution
         required: true
