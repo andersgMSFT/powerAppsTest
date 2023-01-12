@@ -169,7 +169,7 @@ jobs:
           artifacts: ${{ github.event.inputs.appVersion }}
 
   Deploy-PowerPlatform:
-    needs: [ Deploy ]
+    needs: [ Initialization ]
     runs-on: ubuntu-latest
     environment: ${{github.event.inputs.environmentName}}
     env:
