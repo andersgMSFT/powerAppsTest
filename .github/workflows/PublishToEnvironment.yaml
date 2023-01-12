@@ -6,10 +6,11 @@ on:
       appVersion:
         description: App version to deploy to environment(s) (current, prerelease, draft, latest or version number)
         required: false
-        default: 'current'
+        default: 'latest'
       environmentName:
         description: Environment mask to receive the new version (* for all, PROD* for all environments starting with PROD)
         required: true
+        default: CDX
 
 permissions:
   contents: read
@@ -170,7 +171,10 @@ jobs:
   Deploy-PowerPlatform:
     needs: [ Deploy ]
     runs-on: ubuntu-latest
-    environment: ${{github.event.inputs.environment}}
+    environment: ${{github.event.inputs.environmentName}}
+    env:
+      solutionName: BcSampleAppsSolution
+      version: 2.0.0
     steps:
       - name: Checkout branch
         uses: actions/checkout@v3
@@ -186,7 +190,7 @@ jobs:
       - name: Update solution settings
         shell: pwsh
         run: |
-          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}} -postfix ${{env.postFixText}} -managed ${{github.event.inputs.managed}}
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{env.solutionName}}/Other/Solution.xml -version ${{env.version}}.${{github.run_number}}
       
       - name: Update BC connection
         shell: pwsh
@@ -197,15 +201,15 @@ jobs:
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
           solution-file: forgetMe.zip
-          solution-folder: ${{github.event.inputs.solutionName}}
+          solution-folder: ${{env.solutionName}}
           solution-type: ${{env.solutionType}}
           process-canvas-apps: true
 
       - name: Pack solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
-          solution-file: output/${{github.event.inputs.solutionName}}.zip
-          solution-folder: ${{github.event.inputs.solutionName}}
+          solution-file: output/${{env.solutionName}}.zip
+          solution-folder: ${{env.solutionName}}
           solution-type: ${{env.solutionType}}
           process-canvas-apps: true
 
@@ -222,15 +226,15 @@ jobs:
           user-name: ${{secrets.PowerUser}}
           password-secret: ${{secrets.PowerPassword}}
           environment-url: ${{secrets.PowerEnv}}
-          solution-file: output/${{github.event.inputs.solutionName}}.zip
+          solution-file: output/${{env.solutionName}}.zip
           force-overwrite: true
           publish-changes: true
 
       - name: Publish solution artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{github.event.inputs.solutionName}}
-          path: output/${{github.event.inputs.solutionName}}.zip
+          name: ${{env.solutionName}}
+          path: output/${{env.solutionName}}.zip
 
   PostProcess:
     if: always()
