@@ -37,33 +37,33 @@ jobs:
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
           solution-file: forgetMe.zip
-          solution-folder: ${{github.event.inputs.solutionName}}
+          solution-folder: PowerPlatform/${{github.event.inputs.solutionName}}
           solution-type: ${{env.solutionType}}
           process-canvas-apps: true
 
       - name: Update solution settings (unmanaged)
         shell: pwsh
         run: |
-          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}}
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath PowerPlatform/${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}}
 
       - name: Pack Solution (Unmanaged)
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
           solution-file: "output/${{github.event.inputs.solutionName}}.zip"
-          solution-folder: ${{github.event.inputs.solutionName}}
+          solution-folder: PowerPlatform/${{github.event.inputs.solutionName}}
           solution-type: "Unmanaged"
           process-canvas-apps: true
 
       - name: Update solution settings (managed)
         shell: pwsh
         run: |
-          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}} -managed true
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath PowerPlatform/${{github.event.inputs.solutionName}}/Other/Solution.xml -version ${{github.event.inputs.version}}.${{github.run_number}} -managed true
 
       - name: Pack Solution (Managed)
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
           solution-file: "output/${{github.event.inputs.solutionName}}_managed.zip"
-          solution-folder: ${{github.event.inputs.solutionName}}
+          solution-folder: PowerPlatform/${{github.event.inputs.solutionName}}
           solution-type: "Managed"
           process-canvas-apps: true
 

@@ -18,7 +18,7 @@ jobs:
       - name: Update solution settings
         shell: pwsh
         run: |
-          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{env.solutionName}}/Other/Solution.xml -version ${{env.version}} -postFix ${{env.postFix}}
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath PowerPlatform/${{env.solutionName}}/Other/Solution.xml -version ${{env.version}} -postFix ${{env.postFix}}
 
       - name: Update BC connection
         shell: pwsh
@@ -29,15 +29,15 @@ jobs:
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
           solution-file: forgetMe.zip
-          solution-folder: ${{env.solutionName}}
+          solution-folder: PowerPlatform/${{env.solutionName}}
           solution-type: ${{env.solutionType}}
           process-canvas-apps: true
-    
+
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
           solution-file: "output/${{env.solutionName}}.zip"
-          solution-folder: "${{env.solutionName}}"
+          solution-folder: "PowerPlatform/${{env.solutionName}}"
           solution-type: "Unmanaged"
           process-canvas-apps: true
 
