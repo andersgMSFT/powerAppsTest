@@ -175,6 +175,7 @@ jobs:
     env:
       solutionName: BcSampleAppsSolution
       version: 2.0.0
+      solutionType: Unmanaged
     steps:
       - name: Checkout branch
         uses: actions/checkout@v3
@@ -190,7 +191,7 @@ jobs:
       - name: Update solution settings
         shell: pwsh
         run: |
-          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{env.solutionName}}/Other/Solution.xml -version ${{env.version}}.${{github.run_number}}
+          .github/actions/script/updateSolutionFile.ps1 -solutionPath PowerPlatform/${{env.solutionName}}/Other/Solution.xml -version ${{env.version}}.${{github.run_number}}
       
       - name: Update BC connection
         shell: pwsh
@@ -201,7 +202,7 @@ jobs:
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
           solution-file: forgetMe.zip
-          solution-folder: ${{env.solutionName}}
+          solution-folder: PowerPlatform/${{env.solutionName}}
           solution-type: ${{env.solutionType}}
           process-canvas-apps: true
 
@@ -209,7 +210,7 @@ jobs:
         uses: microsoft/powerplatform-actions/pack-solution@v0
         with:
           solution-file: output/${{env.solutionName}}.zip
-          solution-folder: ${{env.solutionName}}
+          solution-folder: PowerPlatform/${{env.solutionName}}
           solution-type: ${{env.solutionType}}
           process-canvas-apps: true
 
