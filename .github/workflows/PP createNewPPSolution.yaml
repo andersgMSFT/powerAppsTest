@@ -6,6 +6,11 @@ on:
         description: Name of the new Power Platform solution
         required: true
         default: testName
+      AddSampleApps:
+        description: Add Bc sample apps to the new solution
+        required: true
+        type: boolean
+        default: true
 
 jobs:
   build-and-deploy:
@@ -14,6 +19,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Create directory
+        run: mkdir ${{github.event.inputs.solutionName}}
         
       - name: Download files
         uses: robinraju/release-downloader@v1.7
@@ -26,6 +34,7 @@ jobs:
         run: ls;
 
       - name: unpack-solution action
+        if: github.event.inputs.AddSampleApps == 'true'
         uses: microsoft/powerplatform-actions/unpack-solution@v0
         with:
           solution-file: BcSampleAppsSolution_0.0.0.1.zip
@@ -35,9 +44,11 @@ jobs:
           process-canvas-apps: true
 
       - name: Remove zip file
+        if: github.event.inputs.AddSampleApps == 'true'
         run: rm BcSampleAppsSolution_0.0.0.1.zip
 
       - name: Remove possible postfix from solution file
+        if: github.event.inputs.AddSampleApps == 'true'
         shell: pwsh
         run: |
           .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml
