@@ -1,0 +1,27 @@
+{
+  "de8998c1-8a13-4650-a853-b2f4a825e23e": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "displayName": "Dynamics 365 Business Central",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1613/1.0.1613.3125/dynamicssmbsaas/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_dynamicssmbsaas"
+    },
+    "datasets": {
+      "PRODUCTION,a2db7307-078b-ed11-aad8-000d3a21edc2": {
+        "dataSources": {
+          "items (v2.0)": {
+            "tableName": "items,v2.0"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "items (v2.0)"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "de8998c1-8a13-4650-a853-b2f4a825e23e"
+  }
+}
