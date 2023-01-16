@@ -108,5 +108,4 @@ foreach ($powerApp in $powerApps) {
     Write-Host "Updating App: " $powerAppName " (" $powerAppDisplayName")";    
     updateAllFileAndFolderNames -rootFolder .\BcSampleAppsSolution -oldValue $powerAppName -newValue new_bcwarehousehelperdev_290e3;
     updateAllFileContent -rootFolder .\BcSampleAppsSolution -oldDisplayName $powerAppDisplayName -newDisplayName "BC Warehouse Helper" -oldAppName $powerAppName -newAppName new_bcwarehousehelperdev_290e3;
-
 }

@@ -18,7 +18,7 @@ jobs:
       - name: Update solution settings
         shell: pwsh
         run: |
-          .github/actions/script/updateSolutionFile.ps1 -solutionPath PowerPlatform/${{env.solutionName}}/Other/Solution.xml -version ${{env.version}} -postFix ${{env.postFix}}
+          .github/actions/script/updateSolutionFile.ps1 -version ${{env.version}} -postFix ${{env.postFix}}
 
       - name: Update BC connection
         shell: pwsh

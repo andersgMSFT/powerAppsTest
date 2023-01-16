@@ -9,7 +9,7 @@ function getCurrentSettings {
     # The Business Central connector id
     $connectorId = "db53e06c-0d5d-4540-a126-3218ac51e136";
 
-    $connectionFiles = Get-ChildItem -Recurse -File -Include Connections.json    
+    $connectionFiles = Get-ChildItem -Recurse -File -Include "Connections.json";    
     foreach ($connectionFile in $connectionFiles) {
 
         $connectionsFilePath = $connectionFile.FullName;

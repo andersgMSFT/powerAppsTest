@@ -64,7 +64,7 @@ jobs:
       - name: Remove possible postfix from solution file
         shell: pwsh
         run: |
-          .github/actions/script/updateSolutionFile.ps1 -solutionPath ${{github.event.inputs.solutionName}}/Other/Solution.xml
+          .github/actions/script/updateSolutionFile.ps1
 
       - name: Commit changes (if there are any)
         shell: pwsh
